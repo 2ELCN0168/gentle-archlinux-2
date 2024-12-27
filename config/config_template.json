@@ -1,0 +1,24 @@
+{
+  "_comment_1": "Do not edit those options unless you know what you do.",
+  "_comment_2": "Empty options must not be changed unless you want to skip the choice menu.",
+  "system": {
+    "efi_path": "/sys/firmware/efi/fw_platform_size",
+    "uefi": 0,
+    "bootloader": "",
+    "cpu": {
+      "vendor_id": ""
+    }
+  },
+  "drives": {
+    "encryption": "",
+    "filesystem": "",
+    "lvm": "",
+    "btrfs_subvolumes": "",
+    "btrfs_quotas": "",
+    "selected_drives": [],
+    "volumes": []
+  },
+  "network": {
+    "net_manager": ""
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "_comment_1": "Do not edit those options unless you know what you do.",
+  "_comment_2": "Empty options must not be changed unless you want to skip the choice menu.",
+  "system": {
+    "efi_path": "/sys/firmware/efi/fw_platform_size",
+    "uefi": 1,
+    "bootloader": "refind",
+    "cpu": {
+      "vendor_id": "AuthenticAMD"
+    }
+  },
+  "drives": {
+    "encryption": 0,
+    "filesystem": "xfs",
+    "lvm": 0,
+    "btrfs_subvolumes": "",
+    "btrfs_quotas": "",
+    "selected_drives": [
+      "sda"
+    ],
+    "volumes": []
+  },
+  "network": {
+    "net_manager": "networkmanager"
+  }
+}

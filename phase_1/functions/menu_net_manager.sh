@@ -21,7 +21,11 @@ function menu_net_manager()
                 read -r ans
                 : "${ans:=1}"
 
-                [[ "${ans}" =~ ^[0-2]$ ]] && break || invalid_answer
+                if [[ "${ans}" =~ ^[0-2]$ ]]; then
+                        break
+                else
+                        invalid_answer
+                fi
         done
 
         case "${ans}" in

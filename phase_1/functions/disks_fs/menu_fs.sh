@@ -24,7 +24,11 @@ function menu_fs()
                 read -r ans
                 : "${ans:=1}"
 
-                [[ "${ans}" =~ ^[0-3]$ ]] && break || invalid_answer
+                if [[ "${ans}" =~ ^[0-3]$ ]]; then
+                        break
+                else
+                        invalid_answer
+                fi
         done
 
 

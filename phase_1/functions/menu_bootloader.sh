@@ -27,7 +27,11 @@ function menu_bootloader()
                 read -r ans
                 : "${ans:=0}"
 
-                [[ "${ans}" =~ ^[0-2]$ ]] && break || invalid_answer
+                if [[ "${ans}" =~ ^[0-2]$ ]]; then 
+                        break
+                else
+                        invalid_answer
+                fi
         done
 
         case "${ans}" in

@@ -1,9 +1,9 @@
 function menu_lvm()
 {
-        local is_lvm
-        is_lvm="$(jaq -r '.drives.lvm' ${json_config})"
+        local is_lvm="$(jaq -r '.drives.lvm' ${json_config})"
 
-        [[ ! -z "${is_lvm}" ]] && return
+        # Return if 'lvm' is set in the JSON config.
+        [[ -n "${is_lvm}" ]] && return
 
         while true; do
                 printf "%b" "${Q} Do you want to use ${C_C}LVM${N_F}? [y/N] -> "

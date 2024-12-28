@@ -1,10 +1,9 @@
 function menu_net_manager()
 {
-        local network_manager
-        network_manager="$(jaq -r '.network.net_manager' ${json_config})"
+        local network_manager="$(jaq -r '.network.net_manager' ${json_config})"
 
         # Return if it's already set
-        [[ ! -z "${network_manager}" ]] && return
+        [[ -n "${network_manager}" ]] && return
 
         while true; do
                 title "Network Manager" "${C_C}" 40

@@ -1,9 +1,9 @@
 function menu_luks()
 {
-        local drive_encryption
-        drive_encryption="$(jaq -r '.drives.encryption' ${json_config})"
+        local drive_encryption="$(jaq -r '.drives.encryption' ${json_config})"
 
-        [[ -z "${drive_encryption}" ]] || return
+        # Return if 'drives_encryption' is set in the JSON config.
+        [[ -n "${drive_encryption}" ]] && return
 
         while true; do
                 printf "%b" "${Q} Do you want your system to be encrypted with "

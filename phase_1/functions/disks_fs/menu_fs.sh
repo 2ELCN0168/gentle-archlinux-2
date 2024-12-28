@@ -3,7 +3,8 @@ function menu_fs()
         local filesystem
         filesystem="$(jaq -r '.drives.filesystem' ${json_config})"
 
-        [[ -z "${filesystem}" ]] || return
+        # Return if 'filesystem' is set in the JSON config.
+        [[ -n "${filesystem}" ]] && return
 
         while true; do
                 title "Filesystem" "${C_C}" 40

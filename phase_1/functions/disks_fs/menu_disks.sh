@@ -1,5 +1,6 @@
 function menu_disks()
 {
+        # May need to check if the list is not empty in the JSON config
         local disks_list is_list_empty
         local is_lvm
 

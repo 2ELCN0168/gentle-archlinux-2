@@ -2,7 +2,8 @@ function get_cpu_vendor()
 {
         local vendor="$(jaq -r '.system.cpu.vendor_id' ${json_config})"
 
-        [[ ! -z "${vendor}" ]] && return
+        # Return if 'vendor_id' is set in the JSON config.
+        [[ -n "${vendor}" ]] && return
         [[ ! -f "/proc/cpuinfo" ]] && cpuinfo_error
 
         vendor="$(awk -F ': ' '/vendor_id/ { print $2; exit }' /proc/cpuinfo)"

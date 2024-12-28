@@ -1,7 +1,10 @@
-function bios_uefi()
+function bios_uefi(
 {
         local efi_path="$(jaq -r '.system.efi_path' ${json_config})"
-        local uefi
+        local uefi=$(jaq -r '.system.uefi' ${json_config})
+
+        # Return if 'uefi' is set in JSON config.
+        [[ -n "${uefi}" ]] && return
 
         if [[ -f "${efi_path}" ]]; then
                 uefi=1

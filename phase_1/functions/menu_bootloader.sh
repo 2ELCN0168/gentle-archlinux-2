@@ -1,6 +1,10 @@
 function menu_bootloader()
 {
         local uefi_mode="$(jaq -r '.system.uefi' ${json_config})"
+        local bootloader="$(jaq -r '.system.bootloader' ${json_config})"
+        
+        # Return if 'bootloader' is set in the JSON config.
+        [[ -n "${bootloader}" ]] && return
 
         # BIOS mode uses GRUB and no choice is available.
         if [[ "${uefi_mode}" -eq 0 ]]; then
@@ -25,8 +29,6 @@ function menu_bootloader()
 
                 [[ "${ans}" =~ ^[0-2]$ ]] && break || invalid_answer
         done
-
-        local bootloader
 
         case "${ans}" in
                0) bootloader="refind" ;;

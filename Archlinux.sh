@@ -12,6 +12,7 @@ source "./phase_1/functions/lvm_luks/menu_lvm.sh"
 source "./phase_1/functions/disks_fs/menu_fs.sh"
 source "./phase_1/functions/disks_fs/menu_disks.sh"
 source "./phase_1/functions/menu_net_manager.sh"
+source "./phase_1/functions/menu_kernel.sh"
 
 function main() {
 
@@ -72,6 +73,8 @@ function main() {
         menu_disks
 
         menu_net_manager
+
+        menu_kernel
 }
 
 main "${@}"

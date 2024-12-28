@@ -5,6 +5,7 @@
     "efi_path": "/sys/firmware/efi/fw_platform_size",
     "uefi": 0,
     "bootloader": "",
+    "kernel": "",
     "cpu": {
       "vendor_id": ""
     }

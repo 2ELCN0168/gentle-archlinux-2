@@ -2,18 +2,27 @@
   "_comment_1": "Do not edit those options unless you know what you do.",
   "_comment_2": "Empty options must not be changed unless you want to skip the choice menu.",
   "system": {
-    "efi_path": "/sys/firmware/efi/fw_platform_size",
-    "uefi": 0,
+    "uefi": "",
     "bootloader": "",
     "kernel": "",
-    "cpu": {
-      "vendor_id": ""
+    "hostname": "",
+    "domain_name": "",
+    "cpu_vendor": "",
+    "users": {
+      "root_account": "",
+      "user_1": {
+        "username": "",
+        "groups": [],
+        "home_dir": "",
+        "administrator": ""
+      }
     }
   },
   "drives": {
     "encryption": "",
     "filesystem": "",
     "lvm": "",
+    "contains_nvme": "",
     "btrfs_subvolumes": "",
     "btrfs_quotas": "",
     "selected_drives": [],
@@ -21,5 +30,69 @@
   },
   "network": {
     "net_manager": ""
+  },
+  "packages": {
+    "install_net_tools": "",
+    "install_help_tools": "",
+    "install_monitoring_tools": "",
+    "base_packages": [
+      "base",
+      "base-devel",
+      "linux-firmware",
+      "rust",
+      "git",
+      "systemctl-tui",
+      "hdparm",
+      "eza",
+      "terminus-font",
+      "openssh",
+      "cryptsetup",
+      "efibootmgr",
+      "wget",
+      "gdisk",
+      "ntfs-3g",
+      "neovim",
+      "vim",
+      "vi",
+      "dos2unix",
+      "tree",
+      "fastfetch",
+      "dhclient",
+      "tmux",
+      "arch-audit",
+      "xdg-user-dirs",
+      "arch-install-scripts"
+    ],
+    "zsh_packages": [
+      "zsh",
+      "zsh-syntax-highlighting",
+      "zsh-autosuggestions",
+      "zsh-completions",
+      "zsh-history-substring-search"
+    ],
+    "net_tools": [
+      "bind-tools", 
+      "ldns", 
+      "nmon", 
+      "nethogs", 
+      "jnettop", 
+      "iptraf-ng", 
+      "tcpdump", 
+      "nmap"
+    ],
+    "monitoring_tools": [
+      "btop", 
+      "htop", 
+      "bmon", 
+      "iotop", 
+      "bottom"
+    ],
+    "help_tools": [
+      "texinfo", 
+      "tealdeer", 
+      "man", 
+      "man-pages" 
+    ],
+    "additional_packages": []
   }
 }

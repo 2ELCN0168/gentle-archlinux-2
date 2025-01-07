@@ -13,9 +13,11 @@ source "./phase_1/functions/disks_fs/menu_fs.sh"
 source "./phase_1/functions/disks_fs/menu_disks.sh"
 source "./phase_1/functions/menu_net_manager.sh"
 source "./phase_1/functions/menu_kernel.sh"
-source "./phase_1/functions/menu_guest_agent.sh"
+source "./phase_1/functions/menu_guest_agents.sh"
 source "./phase_1/functions/menu_hostname_fqdn.sh"
 source "./phase_1/functions/menu_root_account.sh"
+source "./phase_1/functions/menu_vconsole.sh"
+source "./phase_1/functions/configure_pacman.sh"
 
 function main() {
 
@@ -79,11 +81,15 @@ function main() {
 
         menu_kernel
 
-        menu_guest_agent
+        menu_guest_agents
 
         menu_hostname
 
         menu_domain_name
+
+        menu_vconsole
+
+        configure_pacman
 }
 
 main "${@}"

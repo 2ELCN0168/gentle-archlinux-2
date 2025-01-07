@@ -8,6 +8,7 @@
     "hostname": "",
     "domain_name": "",
     "cpu_vendor": "",
+    "keymap": "",
     "users": {
       "root_account": "",
       "user_1": {
@@ -16,6 +17,10 @@
         "home_dir": "",
         "administrator": ""
       }
+    },
+    "pacman": {
+      "color": "",
+      "parallel_downloads": ""
     }
   },
   "drives": {
@@ -71,28 +76,17 @@
       "zsh-history-substring-search"
     ],
     "net_tools": [
-      "bind-tools", 
-      "ldns", 
-      "nmon", 
-      "nethogs", 
-      "jnettop", 
-      "iptraf-ng", 
-      "tcpdump", 
+      "bind-tools",
+      "ldns",
+      "nmon",
+      "nethogs",
+      "jnettop",
+      "iptraf-ng",
+      "tcpdump",
       "nmap"
     ],
-    "monitoring_tools": [
-      "btop", 
-      "htop", 
-      "bmon", 
-      "iotop", 
-      "bottom"
-    ],
-    "help_tools": [
-      "texinfo", 
-      "tealdeer", 
-      "man", 
-      "man-pages" 
-    ],
+    "monitoring_tools": ["btop", "htop", "bmon", "iotop", "bottom"],
+    "help_tools": ["texinfo", "tealdeer", "man", "man-pages"],
     "additional_packages": []
   }
 }

@@ -62,6 +62,17 @@ function menu_disks()
                 fi
         done
 
+        local is_nvme
+
+        # If there is a nvme, add nvme flag.
+        if [[ "${disks_list[@]}" =~ ^nvme.*$ ]]; then
+                is_nvme=1
+        else
+                is_nvme=0
+        fi
+
+        jaq -i '.drives.contains_nvme = "'"${is_nvme}"'"' "${json_config}"
+
         for i in "${disks_list[@]}"; do
                 jaq -i '.drives.selected_drives += ["'"${i}"'"]' \
                 "${json_config}"

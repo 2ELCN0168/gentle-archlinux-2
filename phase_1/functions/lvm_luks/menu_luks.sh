@@ -24,5 +24,5 @@ function menu_luks()
                 printf "%b" "${INFO} Your drive won't be encrypted.\n\n${N_F}"
         fi
 
-        jaq -i '.drives.encryption = '${drive_encryption} "${json_config}"
+        jaq -i '.drives.encryption = '"${drive_encryption}" "${json_config}"
 }

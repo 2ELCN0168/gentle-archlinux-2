@@ -9,6 +9,7 @@
     "domain_name": "",
     "cpu_vendor": "",
     "keymap": "",
+    "initcpio_hooks": "",
     "users": {
       "root_account": "",
       "user_1": {
@@ -40,6 +41,8 @@
     "install_net_tools": "",
     "install_help_tools": "",
     "install_monitoring_tools": "",
+    "vim_configuration": "",
+    "nvim_configuration": "",
     "base_packages": [
       "base",
       "base-devel",

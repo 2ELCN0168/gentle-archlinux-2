@@ -18,6 +18,8 @@ source "./phase_1/functions/menu_hostname_fqdn.sh"
 source "./phase_1/functions/menu_root_account.sh"
 source "./phase_1/functions/menu_vconsole.sh"
 source "./phase_1/functions/configure_pacman.sh"
+source "./phase_1/functions/configure_mkinitcpio.sh"
+source "./phase_1/functions/configure_vim_nvim.sh"
 
 function main() {
 
@@ -90,6 +92,10 @@ function main() {
         menu_vconsole
 
         configure_pacman
+
+        configure_mkinitcpio
+
+        configure_vim_nvim
 }
 
 main "${@}"

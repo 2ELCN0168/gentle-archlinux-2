@@ -1,4 +1,4 @@
-function bios_uefi(
+function bios_uefi()
 {
         local efi_path="/sys/firmware/efi/fw_platform_size"
         local uefi=$(jaq -r '.system.uefi' ${json_config})

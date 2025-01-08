@@ -41,8 +41,7 @@
     "install_net_tools": "",
     "install_help_tools": "",
     "install_monitoring_tools": "",
-    "vim_configuration": "",
-    "nvim_configuration": "",
+    "vim_nvim_configuration": "",
     "base_packages": [
       "base",
       "base-devel",

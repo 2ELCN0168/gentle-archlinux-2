@@ -20,7 +20,7 @@ source "./phase_1/functions/menu_vconsole.sh"
 source "./phase_1/functions/configure_pacman.sh"
 source "./phase_1/functions/configure_mkinitcpio.sh"
 source "./phase_1/functions/configure_vim_nvim.sh"
-source "./phase_1/functions/configure_usersh"
+source "./phase_1/functions/configure_user.sh"
 
 function main() {
 

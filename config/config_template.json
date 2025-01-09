@@ -4,6 +4,9 @@
   "system": {
     "uefi": "",
     "bootloader": "",
+    "grub_config": {
+      "grub_auth": ""
+    },
     "kernel": "",
     "hostname": "",
     "domain_name": "",
@@ -17,7 +20,8 @@
         "username": "",
         "groups": "",
         "home_dir": "",
-        "administrator": ""
+        "administrator": "",
+        "xdg-dirs": ""
       }
     },
     "pacman": {

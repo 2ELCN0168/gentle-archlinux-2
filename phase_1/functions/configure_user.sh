@@ -1,18 +1,19 @@
 function configure_user()
 {
-        local active username home_dir administrator
+        local active username home_dir administrator xdg_dirs
         active="$(jaq -r '.system.users.user.active' ${json_config})"
         username="$(jaq -r '.system.users.user.username' ${json_config})"
         home_dir="$(jaq -r '.system.users.user.home_dir' ${json_config})"
         administrator="$(jaq -r '.system.users.user.administrator' ${json_config})"
+        xdg_dirs="$(jaq -r '.system.users.user.xdg_dirs' ${json_config})"
 
-        if [[ "${active}" -eq 0 ]]; then
+        if [[ "${active}" == "0" ]]; then
                 return
         fi
 
         local ans
         while true; do
-                printf "%b" "%{Q} Would you like to create a user? [Y/n] -> "
+                printf "%b" "${Q} Would you like to create a user? [Y/n] -> "
                 : "${ans:=Y}"
                 printf "%b" "\n"
 
@@ -28,6 +29,8 @@ function configure_user()
                 printf "%b" "${INFO} No user will be created.\n\n"
                 jaq -i '.system.users.user.active = "0"' "${json_config}"
                 return
+        elif [[ "${ans}" =~ ^[yY]$ ]]; then
+                jaq -i '.system.users.user.active = "1"' "${json_config}"
         fi
         
         if [[ -z "${username}" ]]; then
@@ -40,6 +43,10 @@ function configure_user()
 
         if [[ -z "${administrator}" ]]; then
                 _administrator
+        fi
+
+         if [[ -z "${xdg_dirs}" ]]; then
+                _xdg_dirs
         fi
 }
 
@@ -104,6 +111,7 @@ function _home_dir()
 
                 read -r ans
                 : "${ans:=Y}"
+                printf "%b" "\n"
 
                 if [[ "${ans}" =~ ^[yYnN]$ ]]; then
                         break
@@ -147,6 +155,34 @@ function _administrator()
                 [nN]) administrator=0 ;;
         esac
 
-        jaq -i '.system.users.usr.administrator = "'"${administrator}"'"' \
+        jaq -i '.system.users.user.administrator = "'"${administrator}"'"' \
         "${json_config}"
-}       
+}
+
+function _xdg_dirs()
+{
+        local ans xdg_dirs
+
+        while true; do
+                printf "%b" "${Q} Do you want to create user directories? \n"
+                printf "%b" "${C_P}(Documents, Pictures, Downloads, etc.)"
+                printf "%b" "${N_F} [Y/n] -> "
+
+                read -r ans
+                : "${ans:=Y}"
+                printf "%b" "\n"
+
+                if [[ "${ans}" =~ ^[yYnN]$ ]]; then
+                        break
+                else
+                        invalid_answer
+                fi
+        done
+
+        case "${ans}" in
+                [yY]) xdg_dirs=1 ;;
+                [nN]) xdg_dirs=0 ;;
+        esac
+
+        jaq -i '.system.users.user.xdg_dirs = "'"${xdg_dirs}"'"' "${json_config}"
+}

@@ -12,9 +12,10 @@
     "initcpio_hooks": "",
     "users": {
       "root_account": "",
-      "user_1": {
+      "user": {
+        "active": "",
         "username": "",
-        "groups": [],
+        "groups": "",
         "home_dir": "",
         "administrator": ""
       }

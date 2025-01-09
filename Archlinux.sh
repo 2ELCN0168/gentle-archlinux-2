@@ -20,6 +20,7 @@ source "./phase_1/functions/menu_vconsole.sh"
 source "./phase_1/functions/configure_pacman.sh"
 source "./phase_1/functions/configure_mkinitcpio.sh"
 source "./phase_1/functions/configure_vim_nvim.sh"
+source "./phase_1/functions/configure_usersh"
 
 function main() {
 
@@ -96,6 +97,8 @@ function main() {
         configure_mkinitcpio
 
         configure_vim_nvim
+
+        configure_user
 }
 
 main "${@}"

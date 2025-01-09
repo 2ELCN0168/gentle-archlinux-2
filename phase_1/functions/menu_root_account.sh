@@ -27,5 +27,9 @@ function menu_root_account()
                 [nN]) root_account=1 ;;
         esac
 
+        if [[ "${ans}" =~ ^[yY]$ ]]; then
+                printf "%b" "${INFO} ${C_R}root${N_F} account will be locked.\n\n"
+        fi
+
         jaq -i 'system.users.root_account = '"${root_account}" "${json_config}"
 }

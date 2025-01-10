@@ -15,7 +15,7 @@ function menu_kernel()
                 printf "%b" "[0] - ${C_C}linux${N_F} (default)\n"
                 printf "%b" "[1] - ${C_P}linux-lts${N_F}\n"
                 printf "%b" "[2] - ${C_R}linux-hardened${N_F}\n"
-                printf "%b" "[3] - ${C_Y}linux-zen${N_F}\n"
+                printf "%b" "[3] - ${C_Y}linux-zen${N_F}\n\n"
 
                 printf "%b" "────────────────────────────────────────\n\n"
 

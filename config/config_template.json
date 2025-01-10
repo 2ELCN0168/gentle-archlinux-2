@@ -49,6 +49,7 @@
     "issue_net": "",
     "ssh_banner": "",
     "tty_theme": "",
+    "tty_theme_brightness": "",
     "custom_bash": "",
     "custom_zsh": "",
     "custom_sudo": ""

@@ -22,6 +22,7 @@ source "./phase_1/functions/configure_mkinitcpio.sh"
 source "./phase_1/functions/configure_vim_nvim.sh"
 source "./phase_1/functions/configure_user.sh"
 source "./phase_1/functions/configure_firewall.sh"
+source "./phase_1/functions/configure_tty_theme.sh"
 
 function main() {
 
@@ -102,6 +103,14 @@ function main() {
         configure_user
 
         configure_firewall
+
+        configure_tty_theme
+
+        #configure_issue
+
+        #configure_motd
+
+        #configure_ssh
 }
 
 main "${@}"

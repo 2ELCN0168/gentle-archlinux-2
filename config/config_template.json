@@ -40,7 +40,18 @@
     "volumes": []
   },
   "network": {
-    "net_manager": ""
+    "net_manager": "",
+    "firewall": ""
+  },
+  "customization": {
+    "motd": "",
+    "issue": "",
+    "issue_net": "",
+    "ssh_banner": "",
+    "tty_theme": "",
+    "custom_bash": "",
+    "custom_zsh": "",
+    "custom_sudo": ""
   },
   "packages": {
     "install_net_tools": "",

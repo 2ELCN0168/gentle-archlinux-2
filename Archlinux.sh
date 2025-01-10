@@ -21,6 +21,7 @@ source "./phase_1/functions/configure_pacman.sh"
 source "./phase_1/functions/configure_mkinitcpio.sh"
 source "./phase_1/functions/configure_vim_nvim.sh"
 source "./phase_1/functions/configure_user.sh"
+source "./phase_1/functions/configure_firewall.sh"
 
 function main() {
 
@@ -99,6 +100,8 @@ function main() {
         configure_vim_nvim
 
         configure_user
+
+        configure_firewall
 }
 
 main "${@}"

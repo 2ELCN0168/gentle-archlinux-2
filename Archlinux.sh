@@ -23,6 +23,8 @@ source "./phase_1/functions/configure_vim_nvim.sh"
 source "./phase_1/functions/configure_user.sh"
 source "./phase_1/functions/configure_firewall.sh"
 source "./phase_1/functions/configure_tty_theme.sh"
+source "./phase_1/functions/configure_issue.sh"
+source "./phase_1/functions/configure_motd.sh"
 
 function main() {
 
@@ -41,7 +43,10 @@ function main() {
         export opt_m=0 # Minimal mode 
         local total_options
 
-        cp -a "./config/config_template.json" "./config/config.json"
+        # Create the file if it doesn't exist.
+        if [[ ! -e "./config/config.json" ]]; then
+                cp -a "./config/config_template.json" "./config/config.json"
+        fi
 
         export json_config="./config/config.json"
 
@@ -106,11 +111,15 @@ function main() {
 
         configure_tty_theme
 
-        #configure_issue
+        configure_issue
 
-        #configure_motd
+        configure_motd
 
         #configure_ssh
+
+        #configure_dns
+
+        bash "./phase_2/Archlinux_phase_2.sh"
 }
 
 main "${@}"

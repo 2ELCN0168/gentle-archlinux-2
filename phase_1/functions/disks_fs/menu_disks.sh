@@ -8,9 +8,9 @@ function menu_disks()
         is_lvm="$(jaq -r '.drives.lvm' ${json_config})"
 
         # If the table is empty in the JSON file, reset it in Bash
-        if [[ "${disks_list#}" == "[]" ]]; then
-               disks_list=()
-        fi
+        # if [[ "${disks_list#}" == "[]" ]]; then
+        #        disks_list=()
+        # fi
 
         # Check if LVM is set to 1 if the disk list contains multiple names
         if [[ "${#disks_list[@]}" -gt 1 ]]; then
@@ -23,7 +23,7 @@ function menu_disks()
         fi
 
         # If the disks list is empty, set the var to 0
-        if [[ "${#disks_list[@]}" -eq 0 ]]; then
+        if [[ "${#disks_list}" -eq 0 ]]; then
                 is_list_empty=1
         else
                 is_list_empty=0 
@@ -40,7 +40,7 @@ function menu_disks()
                 : "${ans:=sda}"
 
                 # Quit if q/Q is typed and the disks list is not empty
-                [[ "${ans}" =~ ^[qQ]$ && "${#disks_list[@]}" -ne 0 ]] && break
+                [[ "${ans}" =~ ^[qQ]$ && "${#disks_list}" -ne 0 ]] && break
 
                 # Check if the selected drive is a block device
                 if [[ ! -b "/dev/${ans}" ]]; then
@@ -49,12 +49,15 @@ function menu_disks()
                 fi
 
                 # Check if the device is already in the list
-                if [[ "${disks_list[@]}" =~ "${ans}" ]]; then
+                if [[ "${disks_list}" =~ "${ans}" ]]; then
                         printf "%b" "${WARN} The selected block device is "
                         printf "%b" "already in the list!\n"
                 else
-                        disks_list+=("${ans}")
+                        disks_list+=" ${ans}"
                 fi
+
+                printf "%b" "${INFO} The selected disk(s) are: "
+                printf "%b" "${C_G}${disks_list}${N_F}\n\n"
 
                 # Exit after one choice if LVM is set to 0
                 if [[ "${is_lvm}" -eq 0 ]]; then
@@ -65,7 +68,7 @@ function menu_disks()
         local is_nvme
 
         # If there is a nvme, add nvme flag.
-        if [[ "${disks_list[@]}" =~ ^nvme.*$ ]]; then
+        if [[ "${disks_list}" =~ ^nvme.*$ ]]; then
                 is_nvme=1
         else
                 is_nvme=0
@@ -73,13 +76,12 @@ function menu_disks()
 
         jaq -i '.drives.contains_nvme = "'"${is_nvme}"'"' "${json_config}"
 
-        for i in "${disks_list[@]}"; do
-                jaq -i '.drives.selected_drives += ["'"${i}"'"]' \
-                "${json_config}"
-        done
-
-        printf "%b" "${INFO} The selected disk(s) are: ${C_G}${disks_list[*]}"
-        printf "%b" "${N_F}\n\n"
+        # for i in "${disks_list[@]}"; do
+        #         jaq -i '.drives.selected_drives += ["'"${i}"'"]' \
+        #         "${json_config}"
+        # done
+        
+        jaq -i '.drives.selected_drives = "'"${disks_list}"'"' "${json_config}"
 }
 
 function display_disks()

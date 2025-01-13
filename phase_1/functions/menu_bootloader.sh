@@ -1,9 +1,9 @@
 function menu_bootloader()
 {
         local uefi_mode bootloader grub_auth
-         uefi_mode="$(jaq -r '.system.uefi' ${json_config})"
-         bootloader="$(jaq -r '.system.bootloader' ${json_config})"
-         grub_auth="$(jaq -r '.system.grub_config.grub_auth' ${json_config})"
+        uefi_mode="$(jaq -r '.system.uefi' ${json_config})"
+        bootloader="$(jaq -r '.system.bootloader' ${json_config})"
+        grub_auth="$(jaq -r '.system.grub_config.grub_auth' ${json_config})"
         
         # Return if 'bootloader' is set in the JSON config.
         [[ -n "${bootloader}" ]] && return
@@ -20,7 +20,7 @@ function menu_bootloader()
 
                 printf "%b" "[0] - ${C_C}rEFInd${N_F} (default)\n"
                 printf "%b" "[1] - ${C_B}GRUB2${N_F}\n"
-                printf "%b" "[2] - ${C_G}systemd-boot${N_F}\n"
+                printf "%b" "[2] - ${C_G}systemd-boot${N_F}\n\n"
 
                 printf "%b" "────────────────────────────────────────\n\n"
 
@@ -43,9 +43,10 @@ function menu_bootloader()
                2) bootloader="systemd-boot" ;;
         esac
 
-        if [[ "${ans}" -eq 0 && -z ]]; then
-                grub_options
-        fi
+        # TODO:
+        # if [[ "${ans}" -eq 0 && -z ]]; then
+        #         grub_options
+        # fi
 
         jaq -i '.system.bootloader = "'"${bootloader}"'"' "${json_config}"
 

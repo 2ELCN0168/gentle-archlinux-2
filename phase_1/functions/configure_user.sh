@@ -7,7 +7,8 @@ function configure_user()
         administrator="$(jaq -r '.system.users.user.administrator' ${json_config})"
         xdg_dirs="$(jaq -r '.system.users.user.xdg_dirs' ${json_config})"
 
-        if [[ "${active}" == "0" ]]; then
+        # Return if already set in JSON config.
+        if [[ -n "${active}" ]]; then
                 return
         fi
 

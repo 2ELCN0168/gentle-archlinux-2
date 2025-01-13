@@ -36,12 +36,19 @@
     "contains_nvme": "",
     "btrfs_subvolumes": "",
     "btrfs_quotas": "",
-    "selected_drives": [],
-    "volumes": []
+    "selected_drives": "",
+    "volumes": {
+      "only_root": "",
+      "root_and_home": "",
+      "volumes_list": []
+    }
   },
   "network": {
     "net_manager": "",
-    "firewall": ""
+    "firewall": "",
+    "dns_1": "",
+    "dns_2": "",
+    "dns_over_tls": ""
   },
   "customization": {
     "motd": "",
@@ -59,6 +66,7 @@
     "install_help_tools": "",
     "install_monitoring_tools": "",
     "vim_nvim_configuration": "",
+    "guest_agent": "",
     "base_packages": [
       "base",
       "base-devel",

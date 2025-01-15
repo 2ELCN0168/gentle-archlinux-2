@@ -29,6 +29,8 @@ function menu_disks()
                 is_list_empty=0 
         fi
 
+        local counter=0
+
         while true; do
                 # Skip if the disks list was already filled
                 [[ "${is_list_empty}" -eq 0 ]] && break
@@ -53,7 +55,12 @@ function menu_disks()
                         printf "%b" "${WARN} The selected block device is "
                         printf "%b" "already in the list!\n"
                 else
-                        disks_list+=" ${ans}"
+                        if [[ "${counter}" -eq 0 ]]; then
+                                disks_list+="${ans}"
+                        else
+                                disks_list+=" ${ans}"
+                        fi
+                        ((counter++))
                 fi
 
                 printf "%b" "${INFO} The selected disk(s) are: "

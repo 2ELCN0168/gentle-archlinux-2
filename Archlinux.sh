@@ -11,6 +11,8 @@ source "./phase_1/functions/lvm_luks/menu_luks.sh"
 source "./phase_1/functions/lvm_luks/menu_lvm.sh"
 source "./phase_1/functions/disks_fs/menu_fs.sh"
 source "./phase_1/functions/disks_fs/menu_disks.sh"
+source "./phase_1/functions/disks_fs/menu_swap.sh"
+source "./phase_1/functions/disks_fs/configure_volumes.sh"
 source "./phase_1/functions/menu_net_manager.sh"
 source "./phase_1/functions/menu_kernel.sh"
 source "./phase_1/functions/menu_guest_agents.sh"
@@ -86,6 +88,10 @@ function main() {
         menu_fs
 
         menu_disks
+
+        menu_swap
+
+        configure_volumes
 
         menu_net_manager
 

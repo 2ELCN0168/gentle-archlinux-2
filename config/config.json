@@ -2,20 +2,26 @@
   "_comment_1": "Do not edit those options unless you know what you do.",
   "_comment_2": "Empty options must not be changed unless you want to skip the choice menu.",
   "system": {
-    "uefi": "",
-    "bootloader": "",
+    "uefi": 1,
+    "bootloader": "refind",
+    "grub_config": {
+      "grub_auth": ""
+    },
     "kernel": "linux",
     "hostname": "localhost",
     "domain_name": "home.arpa",
     "cpu_vendor": "AuthenticAMD",
     "keymap": "us-acentos",
+    "initcpio_hooks": "base systemd autodetect modconf kms keyboard sd-vconsole block filesystems fsck",
     "users": {
       "root_account": "",
-      "user_1": {
-        "username": "",
-        "groups": [],
-        "home_dir": "",
-        "administrator": ""
+      "user": {
+        "active": "1",
+        "username": "cute-lizard",
+        "groups": "",
+        "home_dir": "1",
+        "administrator": "1",
+        "xdg-dirs": ""
       }
     },
     "pacman": {
@@ -27,21 +33,53 @@
     "encryption": 0,
     "filesystem": "xfs",
     "lvm": 0,
-    "contains_nvme": "1",
+    "contains_nvme": "0",
     "btrfs_subvolumes": "",
     "btrfs_quotas": "",
-    "selected_drives": [
-      "nvme0n1"
-    ],
-    "volumes": []
+    "selected_drives": " nvme0n1",
+    "volumes": {
+      "only_root": "",
+      "root_and_home": "",
+      "volumes_list": [
+        {
+          "mountpoint": "/",
+          "size": "25g"
+        },
+        {
+          "mountpoint": "/home",
+          "size": "10g"
+        },
+        {
+          "mountpoint": "/boot",
+          "size": "10g"
+        }
+      ]
+    }
   },
   "network": {
-    "net_manager": "networkmanager"
+    "net_manager": "networkmanager",
+    "firewall": "1",
+    "dns_1": "",
+    "dns_2": "",
+    "dns_over_tls": ""
+  },
+  "customization": {
+    "motd": "1",
+    "issue": "1",
+    "issue_net": "",
+    "ssh_banner": "",
+    "tty_theme": "synthwave86.sh",
+    "tty_theme_brightness": "0",
+    "custom_bash": "",
+    "custom_zsh": "",
+    "custom_sudo": ""
   },
   "packages": {
     "install_net_tools": "",
     "install_help_tools": "",
     "install_monitoring_tools": "",
+    "vim_nvim_configuration": 1,
+    "guest_agent": " ",
     "base_packages": [
       "base",
       "base-devel",

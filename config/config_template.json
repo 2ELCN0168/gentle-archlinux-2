@@ -13,6 +13,7 @@
     "cpu_vendor": "",
     "keymap": "",
     "initcpio_hooks": "",
+    "swap": "",
     "users": {
       "root_account": "",
       "user": {

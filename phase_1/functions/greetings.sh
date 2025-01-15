@@ -40,7 +40,7 @@ function greetings()
         printf "%b" "${N_F}\n"
 
         systemctl daemon-reload 1> "/dev/null" 2>&1
-        local mounpoints=("home" "usr" "var" "tmp" "boot" "var/log")
+        local mounpoints=("home" "usr" "var" "tmp" "boot" "var/log" "efi")
         local counter=0
 
         for i in "${mountpoints[@]}"; do
@@ -53,6 +53,17 @@ function greetings()
                         printf "%b" "\n"
                 fi
         done
+
+        printf "%b" "${C_C}: :: : : Hello there! : : :: :: : ::: :: :${N_F}\n"
+        printf "%b" "Make sure you have read the ${C_R}Wiki${N_F} "
+        printf "%b" "before starting. I had some headaches to write it, so, "
+        printf "%b" "it's not for nothing.\n"
+
+        printf "%b" "Note that it is useful ${C_P}only${N_F} if you want to "
+        printf "%b" "configure the ${C_Y}JSON configuration "
+        printf "%b" "file${N_F} by yourself. Otherwise, go on!\n"
+
+        printf "%b" "${C_C}:: : :: : :: ::: :: : :: ::: ::: : : :: ::${N_F}\n\n"
 }
 
 function funmounting()

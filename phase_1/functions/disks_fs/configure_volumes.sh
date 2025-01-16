@@ -126,10 +126,6 @@ function add_volume()
                                 printf "%b" "the size of ${C_P}${ans^^}${N_F}."
                                 printf "%b" "\n\n"
                                 total_size=$((total_size - sanitized_ans))
-                                if [[ "${ans}" =~ ^([0-9]+9[gG][iI][bB])$ ]]; then
-                                        ans=$((unit * 1024))
-                                        ans="${ans}mib"
-                                fi
                                 break
                         else
                                 invalid_answer
@@ -139,7 +135,7 @@ function add_volume()
                 jaq -i '.drives.volumes.volumes_list += [
                         {
                                 "mountpoint": "'"${i}"'",
-                                "size": "'"${ans}"'"
+                                "size": "'"${sanitized_ans}mib"'"
                         }
                 ]' "${json_config}"
         done

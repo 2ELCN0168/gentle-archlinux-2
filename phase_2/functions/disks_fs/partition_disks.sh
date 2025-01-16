@@ -7,7 +7,7 @@ function partition_disks()
         local first_disk="$(echo ${disk_list[@]} | cut -d ' ' -f 1)"
         
 
-        # Create partition table GPT or MBR
+        # Create MBR/GPT partition table.
         for i in ${disk_list[@]}; do
                 if [[ "${uefi}" -eq 1 ]]; then
                         # GPT
@@ -18,25 +18,78 @@ function partition_disks()
                 fi
         done
 
+        # Get either /boot or /efi partition size. If there is /boot AND /efi
+        # use, /efi size. If there is only boot, use it. If there is none, the 
+        # system cannot use LVM or LUKs.
+        # Put the volume to use into a var.
+        local efi_size="$(jaq -r '.drives.volumes.volumes_list[] | 
+        select(.mountpoint == "/efi") | .size' ${json_config})"
+
+        local boot_size="$(jaq -r '.drives.volumes.volumes_list[] | 
+        select(.mountpoint == "/boot") | .size' ${json_config})"
+
+        local boot_vol_size
+
+        # If efi size is not empty.
+        if [[ -n "${efi_size}" ]]; then
+                boot_vol_size="${efi_size}"
+        fi
+
+        # If efi size is empty but boot size is not empty.
+        if [[ -z "${efi_size}" && -n "${boot_size}" ]]; then
+                boot_vol_size="${boot_size}"
+        fi
+
+        # If efi size is empty and boot size is empty too.
+        if [[ -z "${efi_size}" && -z "${boot_size}" ]]; then
+                boot_vol_size=""
+        fi
+
         # Create a efi/boot partition outside the lvm or encrypted volume.
         # Then, create the "container" on the first disk.
         # Do not create partition on other disk, they will be used as is.
+        # If there is no bootable partition outside a logical volume, 
+        # the installation fails.
         if [[ "${_lvm}" -eq 1 || "${encryption}" -eq 1 ]]; then
+                if [[ -z "${boot_vol_size}" ]]; then
+                        exit 1
+                fi
                 if [[ "${uefi}" -eq 1 ]]; then
-                        # /efi
-                        sgdisk -n 1::+512M -t 1:ef00 "/dev/${first_disk}"  
+                        # /efi or /boot
+                        sgdisk -n 1::+"${boot_vol_size}" -t 1:ef00 \
+                        "/dev/${first_disk}"  
                         # Container partition
                         parted -s "/dev/${first_disk}" mkpart Archlinux \
-                        600Mib 100%
+                        "${boot_vol_size}" 100%
                 elif [[ "${uefi}" -eq 0 ]]; then
                         # /boot
                         parted -s "/dev/${first_disk}" mkpart primary fat32 \
-                        1Mib 512Mib
+                        1Mib "${boot_vol_size}" 
                         # Container partition
                         parted -s "/dev/${first_disk}" mkpart primary \
-                        600Mib 100%
+                        "${boot_vol_size}" 100%
                 fi
         fi
+
+        # If there is only physical volumes (like partitions), check for 
+        # $boot_vol_size and create the appropriate partition.
+        if [[ "${_lvm}" -eq 0 || "${encryption}" -eq 0 ]]; then
+                if [[ -z "${boot_vol_size}" ]]; then
+                        continue
+                fi
+                if [[ "${uefi}" -eq 1 ]]; then
+                        # /efi or /boot
+                        sgdisk -n 1::+"${boot_vol_size}" -t 1:ef00 \
+                        "/dev/${first_disk}"
+                elif [[ "${uefi}" -eq 0 ]]; then
+                        # /boot
+                        parted -s "/dev/${first_disk}" mkpart primary fat32 \
+                        1Mib "${boot_vol_size}"
+                fi
+        fi
+
+
+
 
         
 

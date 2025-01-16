@@ -7,7 +7,7 @@ function main()
 {
         init_phase_2
 
-        # partition_disks
+        partition_disks
 }
 
 main

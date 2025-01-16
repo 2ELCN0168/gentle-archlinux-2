@@ -121,10 +121,14 @@ function add_volume()
                                                 ;;
                                 esac
 
+
                                 printf "%b" "${INFO} ${C_P}${i}${N_F} will be "
                                 printf "%b" "the size of ${C_P}${ans^^}${N_F}."
                                 printf "%b" "\n\n"
                                 total_size=$((total_size - sanitized_ans))
+                                if [[ "${ans}" =~ ^([0-9]+9[gG][iI][bB])$ ]]; then
+                                        ans=$((unit * 1024))
+                                        ans="${ans}mib"
                                 break
                         else
                                 invalid_answer

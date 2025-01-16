@@ -11,7 +11,9 @@ function partition_disks()
         for i in ${disk_list[@]}; do
                 if [[ "${uefi}" -eq 1 ]]; then
                         # GPT
-                        parted -s "/dev/${i}" mklabel gpt
+                        # parted -s "/dev/${i}" mklabel gpt
+                        sgdisk -Z "/dev/${i}"
+                        sgdisk -o "/dev/${i}"
                 elif [[ "${uefi}" -eq 0 ]]; then
                         # MBR
                         parted -s "/dev/${i}" mklabel msdos
@@ -65,11 +67,12 @@ function partition_disks()
                 fi
                 if [[ "${uefi}" -eq 1 ]]; then
                         # /efi or /boot
-                        sgdisk -n 1::+"${boot_vol_size}" -t 1:ef00 \
+                        sgdisk -n 1::+"${boot_vol_size}" -t 1:ef00 -c 1:"ESP" \
                         "/dev/${first_disk}"  
                         # Container partition
-                        parted -s "/dev/${first_disk}" mkpart Archlinux \
-                        "${boot_vol_size}" 100%
+                        # parted -s "/dev/${first_disk}" mkpart Archlinux \
+                        # "${boot_vol_size}" 100%
+                        sgdisk -n 2::: -t 2:8300 -c 2:"Archlinux"
                 elif [[ "${uefi}" -eq 0 ]]; then
                         # /boot
                         parted -s "/dev/${first_disk}" mkpart primary fat32 \
@@ -88,7 +91,7 @@ function partition_disks()
                 fi
                 if [[ "${uefi}" -eq 1 ]]; then
                         # /efi or /boot
-                        sgdisk -n 1::+"${boot_vol_size}" -t 1:ef00 \
+                        sgdisk -n 1::+"${boot_vol_size}" -t 1:ef00 -c 1:"ESP" \
                         "/dev/${first_disk}"
                 elif [[ "${uefi}" -eq 0 ]]; then
                         # /boot

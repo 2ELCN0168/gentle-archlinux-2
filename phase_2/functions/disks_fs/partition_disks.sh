@@ -52,7 +52,7 @@ function partition_disks()
                 local boot_vol_size_sanitized="$(echo ${boot_vol_size} |
                 tr -d [:alpha:])"
 
-                local boot_vol_size_mib=$((boot_vol_size_sanitized * 1024))
+                local boot_vol_size_mib=$((boot_vol_size_sanitized * 1000))
                 boot_vol_size="${boot_vol_size_mib}mib"
         fi
 
@@ -72,7 +72,8 @@ function partition_disks()
                         # Container partition
                         # parted -s "/dev/${first_disk}" mkpart Archlinux \
                         # "${boot_vol_size}" 100%
-                        sgdisk -n 2::: -t 2:8300 -c 2:"Archlinux"
+                        sgdisk -n 2::: -t 2:8300 -c 2:"Archlinux" \
+                        "/dev/${first_disk}"
                 elif [[ "${uefi}" -eq 0 ]]; then
                         # /boot
                         parted -s "/dev/${first_disk}" mkpart primary fat32 \
@@ -85,7 +86,7 @@ function partition_disks()
 
         # If there is only physical volumes (like partitions), check for 
         # $boot_vol_size and create the appropriate partition.
-        if [[ "${_lvm}" -eq 0 || "${encryption}" -eq 0 ]]; then
+        if [[ "${_lvm}" -eq 0 && "${encryption}" -eq 0 ]]; then
                 if [[ -z "${boot_vol_size}" ]]; then
                         continue
                 fi

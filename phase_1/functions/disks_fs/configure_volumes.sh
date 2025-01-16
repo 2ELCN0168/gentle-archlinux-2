@@ -129,6 +129,7 @@ function add_volume()
                                 if [[ "${ans}" =~ ^([0-9]+9[gG][iI][bB])$ ]]; then
                                         ans=$((unit * 1024))
                                         ans="${ans}mib"
+                                fi
                                 break
                         else
                                 invalid_answer

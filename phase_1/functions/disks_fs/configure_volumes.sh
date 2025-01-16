@@ -94,14 +94,14 @@ function add_volume()
                         
                         total_size_h=$(awk "BEGIN { print ${total_size} / 1024 / 1024 / 1024 }")
 
-                        printf "%b" "${INFO} Available space: ${C_P}${total_size_h}GB${N_F}.\n\n"
+                        printf "%b" "${INFO} Available space: ${C_P}${total_size_h}Gib${N_F}.\n\n"
                         
                         printf "%b" "${Q} Define the size for ${C_P}${i}${N_F} "
-                        printf "%b" "(ex: 25G or 512M) -> "
+                        printf "%b" "(ex: 25Gib or 512Mib) -> "
 
                         read -r ans
 
-                        if [[ "${ans}" =~ ^([0-9]+)([gGmM])$ ]]; then
+                        if [[ "${ans}" =~ ^([0-9]+)([gGmM][iI][bB])$ ]]; then
                                 sanitized_ans="${BASH_REMATCH[1]}"
                                 unit="${BASH_REMATCH[2],,}"
 

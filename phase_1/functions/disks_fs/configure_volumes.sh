@@ -29,6 +29,9 @@ function configure_volumes()
         printf "%b" "either a ${C_C}/efi${N_F} or a ${C_R}/boot${N_F} "
         printf "%b" "volume! Otherwise, it will fails!\n\n"
 
+        printf "%b" "${WARN} Schemes with the ${C_C}[LVM/LUKS]${N_F} are safe "
+        printf "%b" "to use with ${C_C}LVM${N_F} or ${C_R}LUKS${N_F}.\n\n"
+
         while true; do
                 title "Volumes" "${C_C}" 40
 
@@ -36,22 +39,24 @@ function configure_volumes()
 
                 printf "%b" "[1] - ${C_R}Separate / and /home${N_F}\n"
 
-                printf "%b" "[2] - ${C_Y}/ /home /boot${N_F}\n"
+                printf "%b" "[2] - ${C_Y}/ /home /boot${N_F} [LVM/LUKS]\n"
 
-                printf "%b" "[3] - ${C_Y}/ /home /boot /efi ${C_C}[EFI only!]"
-                printf "%b" "${N_F}\n"
+                printf "%b" "[3] - ${C_Y}/ /home /boot /efi ${N_F} [LVM/LUKS] "
+                printf "%b" "${C_C}[EFI only!]${N_F}\n"
 
-                printf "%b" "[4] - ${C_G}/ /home /var /tmp /usr /boot${N_F}\n"
+                printf "%b" "[4] - ${C_G}/ /home /var /tmp /usr /boot${N_F} "
+                printf "%b" "[LVM/LUKS]\n"
 
                 printf "%b" "[5] - ${C_G}/ /home /var /tmp /usr /boot "
-                printf "%b" "/efi ${N_F}(default ${C_C}[EFI only!]${N_F})\n"
+                printf "%b" "/efi ${N_F}(default ${C_C}[EFI only!]${N_F}) "
+                printf "%b" "[LVM/LUKS]\n"
 
 
                 printf "%b" "[6] - ${C_G}/ /home /var /var/log /tmp /usr /boot"
-                printf "%b" "${N_F}\n"
+                printf "%b" "${N_F} [LVM/LUKS]\n"
 
                 printf "%b" "[7] - ${C_G}/ /home /var /var/log /tmp /usr /boot "
-                printf "%b" "/efi ${C_C}[EFI only!]${N_F}\n\n"
+                printf "%b" "/efi ${C_C}[EFI only!]${N_F} [LVM/LUKS]\n\n"
 
                 printf "%b" "────────────────────────────────────────\n\n"
 

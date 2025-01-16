@@ -20,6 +20,7 @@ function menu_swap()
                 local ans
                 read -r ans
                 : "${ans:=0}"
+                printf "%b" "\n"
 
                 if [[ "${ans}" =~ ^[0-2]$ ]]; then 
                         break

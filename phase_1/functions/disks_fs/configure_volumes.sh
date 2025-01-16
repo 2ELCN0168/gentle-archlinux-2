@@ -14,7 +14,8 @@ function configure_volumes()
         local drives="$(jaq -r '.drives.selected_drives' ${json_config})"
 
         local volumes_list
-        volumes_list="$(jaq -r '.drives.volumes.volumes_list | length' ${json_config})"
+        volumes_list="$(jaq -r '.drives.volumes.volumes_list | 
+        length' ${json_config})"
 
         # Return if volumes are already set in the JSON file.
         if [[ "${volumes_list}" -gt 0 ]]; then
@@ -23,8 +24,14 @@ function configure_volumes()
 
         local ans
 
+        printf "%b" "${WARN} If you plan to use ${C_C}LVM${N_F} or "
+        printf "%b" "${C_R}LUKS${N_F}. It is ${C_R}MANDATORY${N_F} to have "
+        printf "%b" "either a ${C_C}/efi${N_F} or a ${C_R}/boot${N_F} "
+        printf "%b" "volume! Otherwise, it will fails!\n\n"
+
         while true; do
                 title "Volumes" "${C_C}" 40
+
                 printf "%b" "[0] - ${C_R}Everything on /${N_F}\n"
 
                 printf "%b" "[1] - ${C_R}Separate / and /home${N_F}\n"

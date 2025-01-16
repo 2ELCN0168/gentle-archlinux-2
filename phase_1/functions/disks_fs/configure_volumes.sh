@@ -135,7 +135,7 @@ function add_volume()
                 jaq -i '.drives.volumes.volumes_list += [
                         {
                                 "mountpoint": "'"${i}"'",
-                                "size": "'"${sanitized_ans}mib"'"
+                                "size": "'"${ans}"'"
                         }
                 ]' "${json_config}"
         done

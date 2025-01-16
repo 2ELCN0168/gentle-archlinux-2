@@ -45,6 +45,15 @@ function partition_disks()
                 boot_vol_size=""
         fi
 
+        # Convert $boot_vol_size to mib if needed.
+        if [[ "${boot_vol_size}" =~ ^.*[gG][iI][bB]$ ]]; then
+                local boot_vol_size_sanitized="$(echo ${boot_vol_size} |
+                tr -d [:alpha:])"
+
+                local boot_vol_size_mib=$((boot_vol_size_sanitized * 1024))
+                boot_vol_size="${boot_vol_size_mib}mib"
+        fi
+
         # Create a efi/boot partition outside the lvm or encrypted volume.
         # Then, create the "container" on the first disk.
         # Do not create partition on other disk, they will be used as is.

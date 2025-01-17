@@ -35,7 +35,7 @@ function create_lvm()
         done
 
         for i in "${!volumes_list[@]}"; do
-                name="$(echo ${!volumes_list[${i}]} | sed 's/\//-/g' | cut -c 2-)"
+                name="$(echo ${i} | sed 's/\//-/g' | cut -c 2-)"
                 if [[ -z "${name}" ]]; then
                         name="root"
                 fi

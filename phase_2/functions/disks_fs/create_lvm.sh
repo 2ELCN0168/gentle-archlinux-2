@@ -24,5 +24,11 @@ function create_lvm()
 
         vgcreate vg_archlinux ${pv_list[@]}
 
-        lvcreate -L 15G -n root vg_archlinux
+        for i in ${!volumes_list[@]}; do
+                name="$(echo ${!volumes_list[${i}]} | sed 's/\//-/g' | cut -c 2-)"
+                if [[ -z "${name}" ]]; then
+                        name="root"
+                fi
+                lvcreate -L ${volumes_list[${i}]} -n "${name}" vg_archlinux
+        done
 }

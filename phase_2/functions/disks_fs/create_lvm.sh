@@ -1,7 +1,7 @@
 function create_lvm()
 {
         local disk_list
-        disk_list="$(jaq -r '.system.drives.selected_drives' ${json_config})"
+        disk_list="$(jaq -r '.drives.selected_drives' ${json_config})"
         local first_disk
         first_disk="$(echo ${disk_list[@]} | cut -d ' ' -f 1)"
         disk_list="$(echo ${disk_list[@]} | cut -d ' ' -f 2-)"

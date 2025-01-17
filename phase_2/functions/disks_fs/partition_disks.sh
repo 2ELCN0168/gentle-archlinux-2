@@ -123,8 +123,9 @@ function partition_disks()
                         if [[ "${uefi}" -eq 1 ]]; then
                                 # Use sgdisk
                                 sgdisk -n "${partnum}"::+"${volumes[${i}]}" \
-                                -t "${partnum}":8300
+                                -t "${partnum}":8300 "/dev/${first_disk}"
                         elif [[ "${uefi}" -eq 0 ]]; then
+                                # TODO:
                                 # Use sfdisk
                                 echo "Nothing yet"
                         fi

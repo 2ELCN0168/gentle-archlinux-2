@@ -8,6 +8,8 @@ function main()
         init_phase_2
 
         partition_disks
+
+        create_luks
 }
 
 main

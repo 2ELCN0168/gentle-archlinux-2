@@ -1,5 +1,5 @@
 function create_lvm()
-}
+{
         local disk_list
         disk_list="$(jaq -r '.system.drives.selected_drives' ${json_config})"
         local first_disk

@@ -41,12 +41,14 @@ function create_lvm()
                 fi
 
                 # Skip efi volume if boot volume is also there.
-                if [[ "${has_efi}" -eq 1 && "${has_boot}" -eq 1 && "${name}" == "efi" ]]; then
+                if [[ "${has_efi}" -eq 1 && "${has_boot}" -eq 1 && 
+                "${name}" == "efi" ]]; then
                         continue
                 fi
 
                 # Skip boot volume if there is no efi volume.
-                if [[ "${has_efi}" -eq 0 && "${has_boot}" -eq 1 && "${name}" == "boot" ]]; then
+                if [[ "${has_efi}" -eq 0 && "${has_boot}" -eq 1 &&
+                "${name}" == "boot" ]]; then
                         continue
                 fi
 

@@ -10,8 +10,8 @@ function create_lvm()
         
         while IFS=$'\t' read -r mountpoint size; do
                 volumes["${mountpoint}"]="${size}"
-        done < <(cat ${json_config}) |
-        jaq -r '.drives.volumes.volumes_list[] | "\(.mountpoint)\t\(.size)"'
+        done < <(cat ${json_config} |
+        jaq -r '.drives.volumes.volumes_list[] | "\(.mountpoint)\t\(.size)"')
 
         pvcreate "/dev/${first_disk}"
 

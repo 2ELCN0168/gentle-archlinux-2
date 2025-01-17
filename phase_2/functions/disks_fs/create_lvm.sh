@@ -9,7 +9,7 @@ function create_lvm()
         declare -A volumes_list
         
         while IFS=$'\t' read -r mountpoint size; do
-                volumes["${mountpoint}"]="${size}"
+                volumes_list["${mountpoint}"]="${size}"
         done < <(cat ${json_config} |
         jaq -r '.drives.volumes.volumes_list[] | "\(.mountpoint)\t\(.size)"')
 

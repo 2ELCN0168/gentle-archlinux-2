@@ -13,7 +13,7 @@ function create_lvm()
         done < <(cat ${json_config} |
         jaq -r '.drives.volumes.volumes_list[] | "\(.mountpoint)\t\(.size)"')
 
-        pvcreate "/dev/${first_disk}"
+        pvcreate "/dev/${first_disk}2"
 
         
         local pv_list

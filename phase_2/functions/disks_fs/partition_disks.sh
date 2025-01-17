@@ -13,12 +13,13 @@ function partition_disks()
                         # GPT
                         # parted -s "/dev/${i}" mklabel gpt
                         sgdisk -Z "/dev/${i}"
-                        sgdisk -o "/dev/${i}"
                 elif [[ "${uefi}" -eq 0 ]]; then
                         # MBR
                         parted -s "/dev/${i}" mklabel msdos
                 fi
         done
+
+        sgdisk -o "/dev/${first_disk}"
 
         # Get either /boot or /efi partition size. If there is /boot AND /efi
         # use, /efi size. If there is only boot, use it. If there is none, the 
@@ -100,7 +101,6 @@ function partition_disks()
                         1Mib "${boot_vol_size}"
                 fi
         fi
-
 
         # Create the rest of the partitions if there is no lvm or encryption
         if [[ "${_lvm}" -eq 0 && "${encryption}" -eq 0 ]]; then

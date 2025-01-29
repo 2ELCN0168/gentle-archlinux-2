@@ -30,14 +30,14 @@
       "parallel_downloads": ""
     }
   },
-  "drives": {
+  "drive": {
     "encryption": "",
     "filesystem": "",
     "lvm": "",
     "contains_nvme": "",
     "btrfs_subvolumes": "",
     "btrfs_quotas": "",
-    "selected_drives": "",
+    "drive": "",
     "volumes": {
       "only_root": "",
       "root_and_home": "",

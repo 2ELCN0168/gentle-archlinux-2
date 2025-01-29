@@ -1,24 +1,24 @@
 function get_cpu_vendor()
 {
-        local vendor="$(jaq -r '.system.cpu_vendor' ${json_config})"
+        local vendor="$(jaq -r '.system.cpu_vendor' "${json_config}")"
 
         # Return if 'vendor_id' is set in the JSON config.
         [[ -n "${vendor}" ]] && return
         [[ ! -f "/proc/cpuinfo" ]] && cpuinfo_error
 
-        vendor="$(awk -F ': ' '/vendor_id/ { print $2; exit }' /proc/cpuinfo)"
+        vendor="$(awk -F ': ' '/vendor_id/ { print $2; exit }' "/proc/cpuinfo")"
 
         case "${vendor}" in
-                "GenuineIntel")
-                        printf "%b" "${INFO} ${C_C}INTEL CPU${N_F} detected."
-                        printf "%b" "\n\n"
-                        ;;
-                "AuthenticAMD")
-                        printf "%b" "${INFO} ${C_R}AMD CPU${N_F} detected.\n\n"
-                        ;;
-                *)
-                        cpuinfo_error
-                        ;;
+        "GenuineIntel")
+                printf "%b" "${INFO} ${C_C}INTEL CPU${N_F} detected."
+                printf "%b" "\n\n"
+                ;;
+        "AuthenticAMD")
+                printf "%b" "${INFO} ${C_R}AMD CPU${N_F} detected.\n\n"
+                ;;
+        *)
+                cpuinfo_error
+                ;;
         esac
 
         jaq -i '.system.cpu_vendor = "'"${vendor}"'"' "${json_config}"

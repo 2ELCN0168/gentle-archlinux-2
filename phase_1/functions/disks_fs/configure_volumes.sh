@@ -5,17 +5,17 @@ function configure_volumes()
         # 3. Ask the user if they want:
         # - All in root volume/partition ;
         # - Separate root/home volume/partition ;
-        # - Separate everything and create their own mountpoints with custom 
+        # - Separate everything and create their own mountpoints with custom
         # sizes.
         #
         # NOTE:
         # That was a real pain to write. Just saying it.
 
-        local drives="$(jaq -r '.drives.selected_drives' ${json_config})"
+        local _drive volumes_list
 
-        local volumes_list
-        volumes_list="$(jaq -r '.drives.volumes.volumes_list | 
-        length' ${json_config})"
+        _drive="$(jaq -r '.drive.drive' "${json_config}")"
+        volumes_list="$(jaq -r '.drive.volumes.volumes_list | 
+        length' "${json_config}")"
 
         # Return if volumes are already set in the JSON file.
         if [[ "${volumes_list}" -gt 0 ]]; then
@@ -27,7 +27,7 @@ function configure_volumes()
         printf "%b" "${WARN} If you plan to use ${C_C}LVM${N_F} or "
         printf "%b" "${C_R}LUKS${N_F}. It is ${C_R}MANDATORY${N_F} to have "
         printf "%b" "either a ${C_C}/efi${N_F} or a ${C_R}/boot${N_F} "
-        printf "%b" "volume! Otherwise, it will fails!\n\n"
+        printf "%b" "volume! Otherwise, it will fail!\n\n"
 
         printf "%b" "${WARN} Schemes with the ${C_C}[LVM/LUKS]${N_F} are safe "
         printf "%b" "to use with ${C_C}LVM${N_F} or ${C_R}LUKS${N_F}.\n\n"
@@ -51,7 +51,6 @@ function configure_volumes()
                 printf "%b" "/efi ${N_F}(default ${C_C}[EFI only!]${N_F}) "
                 printf "%b" "[LVM/LUKS]\n"
 
-
                 printf "%b" "[6] - ${C_G}/ /home /var /var/log /tmp /usr /boot"
                 printf "%b" "${N_F} [LVM/LUKS]\n"
 
@@ -61,7 +60,7 @@ function configure_volumes()
                 printf "%b" "────────────────────────────────────────\n\n"
 
                 printf "%b" "${Q} How do you want to organize your volumes? -> "
-                
+
                 read -r ans
                 : "${ans:=2}"
                 printf "%b" "\n"
@@ -73,16 +72,15 @@ function configure_volumes()
                 fi
         done
 
-
         case "${ans}" in
-                0) add_volume "/" ;;
-                1) add_volume "/ /home" ;;
-                2) add_volume "/ /home /boot" ;;
-                3) add_volume "/ /home /boot /efi" ;;
-                4) add_volume "/ /home /var /tmp /usr /boot" ;;
-                5) add_volume "/ /home /var /tmp /usr /boot /efi" ;;
-                6) add_volume "/ /home /var /var/log /tmp /usr /boot /efi" ;;
-                7) add_volume "/ /home /var /var/log /tmp /usr /boot /efi" ;;
+        0) add_volume "/" "${_drive}" ;;
+        1) add_volume "/ /home" "${_drive}" ;;
+        2) add_volume "/ /home /boot" "${_drive}" ;;
+        3) add_volume "/ /home /boot /efi" "${_drive}" ;;
+        4) add_volume "/ /home /var /tmp /usr /boot" "${_drive}" ;;
+        5) add_volume "/ /home /var /tmp /usr /boot /efi" "${_drive}" ;;
+        6) add_volume "/ /home /var /var/log /tmp /usr /boot /efi" "${_drive}" ;;
+        7) add_volume "/ /home /var /var/log /tmp /usr /boot /efi" "${_drive}" ;;
         esac
 
 }
@@ -90,24 +88,21 @@ function configure_volumes()
 function add_volume()
 {
         local volume_list="${1}"
-        
         local ans sanitized_ans
-
         local total_size total_size_h drive_size
+
         total_size=0
 
-        for a in ${drives[@]}; do
-                drive_size="$(lsblk --bytes -drno SIZE /dev/${a})"
-                total_size=$((total_size + drive_size))
-        done
+        drive_size="$(lsblk --bytes -drno SIZE "/dev/${2}")"
+        total_size=$((total_size + drive_size))
 
-        for i in ${volume_list[@]}; do
+        for i in "${volume_list[@]}"; do
                 while true; do
-                        
+
                         total_size_h=$(awk "BEGIN { print ${total_size} / 1024 / 1024 / 1024 }")
 
                         printf "%b" "${INFO} Available space: ${C_P}${total_size_h}Gib${N_F}.\n\n"
-                        
+
                         printf "%b" "${Q} Define the size for ${C_P}${i}${N_F} "
                         printf "%b" "(ex: 25Gib or 512Mib) -> "
 
@@ -118,14 +113,13 @@ function add_volume()
                                 unit="${BASH_REMATCH[2],,}"
 
                                 case "${unit}" in
-                                        g)
-                                                sanitized_ans=$((sanitized_ans * 1024 * 1024 * 1024))
-                                                ;;
-                                        m)
-                                                sanitized_ans=$((sanitized_ans * 1024 * 1024))
-                                                ;;
+                                g)
+                                        sanitized_ans=$((sanitized_ans * 1024 * 1024 * 1024))
+                                        ;;
+                                m)
+                                        sanitized_ans=$((sanitized_ans * 1024 * 1024))
+                                        ;;
                                 esac
-
 
                                 printf "%b" "${INFO} ${C_P}${i}${N_F} will be "
                                 printf "%b" "the size of ${C_P}${ans^^}${N_F}."

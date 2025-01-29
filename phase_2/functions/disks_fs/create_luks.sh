@@ -1,23 +1,20 @@
 function create_luks()
 {
-        # TODO:
-        #
-        
-        local encryption="$(jaq -r '.drives.encryption' ${json_config})"
-        local disk_list="$(jaq -r '.drives.selected_drives' ${json_config})"
-        local first_disk="$(echo ${disk_list[@]} | cut -d ' ' -f 1)"
-        disk_list="$(echo ${disk_list[@]} | cut -d ' ' -f 2-)"
+        local encryption="$(jaq -r '.drive.encryption' "${json_config}")"
+        local _drive="$(jaq -r '.drive.drive' "${json_config}")"
 
         if [[ "${encryption}" -eq 0 ]]; then
                 return
         fi
 
-        cryptsetup luksFormat "/dev/${first_disk}2"
+        if cryptsetup luksFormat "/dev/${_drive}2"; then
+                printf "%b" "${SUC} ${P}/dev/${_drive}2${N} has been encrypted."
+                printf "%b" "\n"
+        else
+                printf "%b" "${ERR} There was an error during ${P}/dev/"
+                printf "%b" "${_drive}2${N} encryption. Exiting.\n"
+                exit 1
+        fi
 
-        for i in ${disk_list[@]}; do
-                cryptsetup luksFormat "/dev/${i}"
-        done
-
-        # dd bs=512 count=4 if="/dev/random iflag=fullblock" |
-        # install -m 0600 "/dev/stdin" "/etc/cryptsetup-keys.d/system_keyfile.key"
+        cryptsetup open "/dev/${_drive}2" root
 }

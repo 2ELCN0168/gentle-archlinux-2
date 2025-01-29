@@ -1,48 +1,27 @@
 function menu_disks()
 {
         # May need to check if the list is not empty in the JSON config
-        local disks_list is_list_empty
-        local is_lvm
+        local _drive is_nvme
 
-        disks_list="$(jaq -r '.drives.selected_drives' ${json_config})"
-        is_lvm="$(jaq -r '.drives.lvm' ${json_config})"
+        _drive="$(jaq -r '.drive.drive' "${json_config}")"
 
-        # If the table is empty in the JSON file, reset it in Bash
-        # if [[ "${disks_list#}" == "[]" ]]; then
-        #        disks_list=()
-        # fi
-
-        # Check if LVM is set to 1 if the disk list contains multiple names
-        if [[ "${#disks_list[@]}" -gt 1 ]]; then
-                if [[ "${is_lvm}" -ne 1 ]]; then
-                        printf "%b" "${ERR} The disk list contains multiple "
-                        printf "%b" "elements but LVM is not set to 1. "
-                        printf "%b" "Exiting.\n"
-                        exit 1
-                fi
-        fi
-
-        # If the disks list is empty, set the var to 0
-        if [[ "${#disks_list}" -eq 0 ]]; then
-                is_list_empty=1
-        else
-                is_list_empty=0 
-        fi
-
-        local counter=0
+        # Skip if the disk is already set in the JSON config
+        [[ -n "${_drive}" ]] && return
 
         while true; do
-                # Skip if the disks list was already filled
-                [[ "${is_list_empty}" -eq 0 ]] && break
 
-                display_disks ${disks_list[@]}
+                title "Disks" "${C_C}" 40
+
+                lsblk -drno NAME
+
+                printf "%b" "\n────────────────────────────────────────\n\n"
+
+                printf "%b" "${Q} Which drive do you want to use? (default=sda)"
+                printf "%b" " -> "
 
                 local ans
                 read -r ans
                 : "${ans:=sda}"
-
-                # Quit if q/Q is typed and the disks list is not empty
-                [[ "${ans}" =~ ^[qQ]$ && "${#disks_list}" -ne 0 ]] && break
 
                 # Check if the selected drive is a block device
                 if [[ ! -b "/dev/${ans}" ]]; then
@@ -50,63 +29,17 @@ function menu_disks()
                         continue
                 fi
 
-                # Check if the device is already in the list
-                if [[ "${disks_list}" =~ "${ans}" ]]; then
-                        printf "%b" "${WARN} The selected block device is "
-                        printf "%b" "already in the list!\n"
-                else
-                        if [[ "${counter}" -eq 0 ]]; then
-                                disks_list+="${ans}"
-                        else
-                                disks_list+=" ${ans}"
-                        fi
-                        ((counter++))
-                fi
-
-                printf "%b" "${INFO} The selected disk(s) are: "
-                printf "%b" "${C_G}${disks_list}${N_F}\n\n"
-
-                # Exit after one choice if LVM is set to 0
-                if [[ "${is_lvm}" -eq 0 ]]; then
-                break
-                fi
+                printf "%b" "${INFO} The selected disk is: "
+                printf "%b" "${C_G}${_drive}${N_F}\n\n"
         done
 
-        local is_nvme
-
         # If there is a nvme, add nvme flag.
-        if [[ "${disks_list}" =~ ^nvme.*$ ]]; then
+        if [[ "${_drive}" =~ ^nvme.*$ ]]; then
                 is_nvme=1
         else
                 is_nvme=0
         fi
 
-        jaq -i '.drives.contains_nvme = "'"${is_nvme}"'"' "${json_config}"
-
-        # for i in "${disks_list[@]}"; do
-        #         jaq -i '.drives.selected_drives += ["'"${i}"'"]' \
-        #         "${json_config}"
-        # done
-        
-        jaq -i '.drives.selected_drives = "'"${disks_list}"'"' "${json_config}"
-}
-
-function display_disks()
-{
-        # $1 is an exclusion from the results.
-
-        local exclusion="sr0|loop0"
-        
-        for a in "${@}"; do
-                exclusion+="|${a}"
-        done
-
-        title "Disks" "${C_C}" 40
-        
-        lsblk -drno NAME | grep --invert-match --extended-regexp "${exclusion}"
-
-        printf "%b" "\n────────────────────────────────────────\n\n"
-
-        printf "%b" "${Q} Which drive do you want to use? (default=sda) "
-        printf "%b" "Type \"[q]\" to finish selection -> "
+        jaq -i '.drive.contains_nvme = "'"${is_nvme}"'"' "${json_config}"
+        jaq -i '.drive.drive = "'"${_drive}"'"' "${json_config}"
 }

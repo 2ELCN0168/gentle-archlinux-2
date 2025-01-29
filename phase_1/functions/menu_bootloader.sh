@@ -1,10 +1,10 @@
 function menu_bootloader()
 {
         local uefi_mode bootloader grub_auth
-        uefi_mode="$(jaq -r '.system.uefi' ${json_config})"
-        bootloader="$(jaq -r '.system.bootloader' ${json_config})"
-        grub_auth="$(jaq -r '.system.grub_config.grub_auth' ${json_config})"
-        
+        uefi_mode="$(jaq -r '.system.uefi' "${json_config}")"
+        bootloader="$(jaq -r '.system.bootloader' "${json_config}")"
+        grub_auth="$(jaq -r '.system.grub_config.grub_auth' "${json_config}")"
+
         # Return if 'bootloader' is set in the JSON config.
         [[ -n "${bootloader}" ]] && return
 
@@ -14,7 +14,7 @@ function menu_bootloader()
                 jaq -i '.system.bootloader = "'"${bootloader}"'"' "${json_config}"
                 return
         fi
-        
+
         while true; do
                 title "Bootloader" "${C_C}" 40
 
@@ -30,7 +30,7 @@ function menu_bootloader()
                 read -r ans
                 : "${ans:=0}"
 
-                if [[ "${ans}" =~ ^[0-2]$ ]]; then 
+                if [[ "${ans}" =~ ^[0-2]$ ]]; then
                         break
                 else
                         invalid_answer
@@ -38,9 +38,9 @@ function menu_bootloader()
         done
 
         case "${ans}" in
-               0) bootloader="refind" ;;
-               1) bootloader="grub" ;;
-               2) bootloader="systemd-boot" ;;
+        0) bootloader="refind" ;;
+        1) bootloader="grub" ;;
+        2) bootloader="systemd-boot" ;;
         esac
 
         # TODO:
@@ -51,12 +51,12 @@ function menu_bootloader()
         jaq -i '.system.bootloader = "'"${bootloader}"'"' "${json_config}"
 
         case "${bootloader}" in
-               "refind") bootloader="${C_C}rEFInd${N_F}" ;;
-               "grub") bootloader="${C_B}GRUB${N_F}" ;;
-               "systemd-boot") bootloader="${C_R}systemd-boot${N_F}" ;;
+        "refind") bootloader="${C_C}rEFInd${N_F}" ;;
+        "grub") bootloader="${C_B}GRUB${N_F}" ;;
+        "systemd-boot") bootloader="${C_R}systemd-boot${N_F}" ;;
         esac
 
-        printf "%b" "${INFO} ${bootloader} will be installed.\n\n" 
+        printf "%b" "${INFO} ${bootloader} will be installed.\n\n"
 }
 
 function grub_options()
@@ -88,5 +88,5 @@ function grub_options()
         fi
 
         jaq -i '.system.grub_config.grub_auth = "'"${grub_auth}" \
-        "${json_config}"
+                "${json_config}"
 }

@@ -36,7 +36,7 @@
     "contains_nvme": "0",
     "btrfs_subvolumes": "",
     "btrfs_quotas": "",
-    "selected_drives": " nvme0n1",
+    "selected_drives": "nvme0n1",
     "volumes": {
       "only_root": "",
       "root_and_home": "",
@@ -125,19 +125,8 @@
       "tcpdump",
       "nmap"
     ],
-    "monitoring_tools": [
-      "btop",
-      "htop",
-      "bmon",
-      "iotop",
-      "bottom"
-    ],
-    "help_tools": [
-      "texinfo",
-      "tealdeer",
-      "man",
-      "man-pages"
-    ],
+    "monitoring_tools": ["btop", "htop", "bmon", "iotop", "bottom"],
+    "help_tools": ["texinfo", "tealdeer", "man", "man-pages"],
     "additional_packages": []
   }
 }

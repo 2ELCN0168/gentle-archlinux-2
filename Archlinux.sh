@@ -1,5 +1,10 @@
 #! /bin/bash
 
+# Created on: 2024-12-27
+# Author: 2ELCN0168
+# Github: https://github.com/2ELCN0168
+# NOTE: This part only sets up the JSON configuration file.
+
 # source "./phase_1/functions/"
 source "./config/text_formatting.sh"
 source "./phase_1/functions/greetings.sh"
@@ -28,10 +33,11 @@ source "./phase_1/functions/configure_tty_theme.sh"
 source "./phase_1/functions/configure_issue.sh"
 source "./phase_1/functions/configure_motd.sh"
 
-function main() {
+function main()
+{
 
         text_formatting
-        
+
         trap '
                 echo -e "\n\n${C_B}:. ${C_R}Program has been killed! \c"
                 echo -e "Installation aborted. \c"
@@ -42,7 +48,7 @@ function main() {
         export opt_c=0 # Full mode
         export opt_e=0 # Hardening mode
         export opt_h=0 # Help
-        export opt_m=0 # Minimal mode 
+        export opt_m=0 # Minimal mode
         local total_options
 
         # Create the file if it doesn't exist.
@@ -54,11 +60,11 @@ function main() {
 
         while getopts "cehm" opt; do
                 case "${opt}" in
-                        c) opt_c=1 ;;
-                        e) opt_e=1 ;;
-                        h) opt_h=1 ;;
-                        m) opt_m=1 ;;
-                        ?) opt_h=1 ;;
+                c) opt_c=1 ;;
+                e) opt_e=1 ;;
+                h) opt_h=1 ;;
+                m) opt_m=1 ;;
+                ?) opt_h=1 ;;
                 esac
         done
 

@@ -13,7 +13,7 @@ function create_lvm()
         while IFS=$'\t' read -r mountpoint size; do
                 volumes_list["${mountpoint}"]="${size}"
         done < <(jaq -r \
-                '.drives.volumes.volumes_list[] | "\(.mountpoint)\t\(.size)"' \
+                '.drive.volumes.volumes_list[] | "\(.mountpoint)\t\(.size)"' \
                 "${json_config}")
 
         # If there was an encryption, the new root volume is /dev/mapper/root.

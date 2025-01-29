@@ -133,7 +133,7 @@ function add_volume()
                         fi
                 done
 
-                jaq -i '.drives.volumes.volumes_list += [
+                jaq -i '.drive.volumes.volumes_list += [
                         {
                                 "mountpoint": "'"${i}"'",
                                 "size": "'"${ans}"'"

@@ -1,6 +1,6 @@
 function menu_luks()
 {
-        local drive_encryption="$(jaq -r '.drives.encryption' "${json_config}")"
+        local drive_encryption="$(jaq -r '.drive.encryption' "${json_config}")"
 
         # Return if 'drives_encryption' is set in the JSON config.
         [[ -n "${drive_encryption}" ]] && return
@@ -24,5 +24,5 @@ function menu_luks()
                 printf "%b" "${INFO} Your drive won't be encrypted.\n\n${N_F}"
         fi
 
-        jaq -i '.drives.encryption = '"${drive_encryption}" "${json_config}"
+        jaq -i '.drive.encryption = '"${drive_encryption}" "${json_config}"
 }

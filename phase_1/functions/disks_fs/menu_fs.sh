@@ -1,7 +1,7 @@
 function menu_fs()
 {
         local filesystem
-        filesystem="$(jaq -r '.drives.filesystem' "${json_config}")"
+        filesystem="$(jaq -r '.drive.filesystem' "${json_config}")"
 
         # Return if 'filesystem' is set in the JSON config.
         [[ -n "${filesystem}" ]] && return
@@ -40,6 +40,6 @@ function menu_fs()
 
         printf "%b" "${INFO} You chose ${C_W}${filesystem^^}${N_F}.\n"
 
-        jaq -i '.drives.filesystem = "'"${filesystem}"'"' \
+        jaq -i '.drive.filesystem = "'"${filesystem}"'"' \
                 "${json_config}"
 }

@@ -1,6 +1,6 @@
 function menu_lvm()
 {
-        local is_lvm="$(jaq -r '.drives.lvm' "${json_config}")"
+        local is_lvm="$(jaq -r '.drive.lvm' "${json_config}")"
 
         # Return if 'lvm' is set in the JSON config.
         [[ -n "${is_lvm}" ]] && return
@@ -23,5 +23,5 @@ function menu_lvm()
                 printf "%b" "${INFO} You won't use ${C_C}LVM${N_F}.\n\n"
         fi
 
-        jaq -i '.drives.lvm = '${is_lvm} "${json_config}"
+        jaq -i '.drive.lvm = '${is_lvm} "${json_config}"
 }

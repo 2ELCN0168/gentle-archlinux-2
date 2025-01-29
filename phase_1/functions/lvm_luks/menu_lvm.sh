@@ -11,17 +11,16 @@ function menu_lvm()
                 local ans
                 read -r ans
                 : "${ans:=N}"
+                printf "%b" "\n"
 
-                [[ "${ans}" =~ ^[yYnN]$ ]] && break || invalid_answer
+                case "${ans}" in
+                [yY]) is_lvm=1 && break ;;
+                [nN]) is_lvm=0 && break ;;
+                *) invalid_answer ;;
+                esac
         done
 
-        if [[ "${ans}" =~ ^[yY]$ ]]; then
-                is_lvm=1
-                printf "%b" "${INFO} You will use ${C_C}LVM${N_F}.\n\n"
-        elif [[ "${ans}" =~ ^[nN]$ ]]; then
-                is_lvm=0
-                printf "%b" "${INFO} You won't use ${C_C}LVM${N_F}.\n\n"
-        fi
+        printf "%b" "${INFO} LVM is set to: ${C_C}${is_lvm}${N_F}.\n\n"
 
-        jaq -i '.drive.lvm = '${is_lvm} "${json_config}"
+        jaq -i '.drive.lvm = '"${is_lvm}"'"' "${json_config}"
 }

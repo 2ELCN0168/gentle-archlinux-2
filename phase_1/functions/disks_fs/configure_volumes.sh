@@ -97,7 +97,8 @@ function add_volume()
         drive_size="$(lsblk --bytes -drno SIZE "/dev/${2}")"
         total_size=$((total_size + drive_size))
 
-        for i in "${volume_list[@]}"; do
+        # No double quotes because I need to split the string provided in $1.
+        for i in ${volume_list[@]}; do
                 while true; do
 
                         total_size_h=$(awk "BEGIN { print ${total_size} / 1024 / 1024 / 1024 }")

@@ -31,6 +31,7 @@ function menu_disks()
 
                 printf "%b" "${INFO} The selected disk is: "
                 printf "%b" "${C_G}${_drive}${N_F}\n\n"
+                break
         done
 
         # If there is a nvme, add nvme flag.

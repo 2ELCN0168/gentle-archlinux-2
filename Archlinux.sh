@@ -71,7 +71,7 @@ function main()
         total_options=$((opt_c + opt_e + opt_h + opt_m))
 
         if [[ "${total_options}" -gt 1 ]]; then
-                printf "%b" "${R}You can only use one option.${N}\n"
+                printf "%b" "${C_R}You can only use one option.${N_F}\n"
                 exit 2
         fi
 

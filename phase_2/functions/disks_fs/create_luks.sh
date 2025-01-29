@@ -8,11 +8,11 @@ function create_luks()
         fi
 
         if cryptsetup luksFormat "/dev/${_drive}2"; then
-                printf "%b" "${SUC} ${P}/dev/${_drive}2${N} has been encrypted."
+                printf "%b" "${SUC} ${C_P}/dev/${_drive}2${N_F} has been encrypted."
                 printf "%b" "\n"
         else
-                printf "%b" "${ERR} There was an error during ${P}/dev/"
-                printf "%b" "${_drive}2${N} encryption. Exiting.\n"
+                printf "%b" "${ERR} There was an error during ${C_P}/dev/"
+                printf "%b" "${_drive}2${N_F} encryption. Exiting.\n"
                 exit 1
         fi
 

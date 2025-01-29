@@ -9,7 +9,7 @@ function format_volumes()
         while IFS=$'\t' read -r mountpoint size; do
                 volumes_list["${mountpoint}"]="${size}"
         done < <(jaq -r \
-                '.drives.volumes.volumes_list[] | "\(.mountpoint)\t\(.size)"' \
+                '.drive.volumes.volumes_list[] | "\(.mountpoint)\t\(.size)"' \
                 "${json_config}")
 
         local has_boot_vol=0

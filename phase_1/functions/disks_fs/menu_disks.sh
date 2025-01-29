@@ -29,6 +29,8 @@ function menu_disks()
                         continue
                 fi
 
+                _drive="${ans}"
+
                 printf "%b" "${INFO} The selected disk is: "
                 printf "%b" "${C_G}${_drive}${N_F}\n\n"
                 break

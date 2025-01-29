@@ -62,7 +62,7 @@ function configure_volumes()
                 printf "%b" "${Q} How do you want to organize your volumes? -> "
 
                 read -r ans
-                : "${ans:=2}"
+                : "${ans:=5}"
                 printf "%b" "\n"
 
                 if [[ "${ans}" =~ ^[0-7]$ ]]; then
@@ -88,6 +88,7 @@ function configure_volumes()
 function add_volume()
 {
         local volume_list="${1}"
+
         local ans sanitized_ans
         local total_size total_size_h drive_size
 

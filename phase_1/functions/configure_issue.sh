@@ -1,6 +1,6 @@
 function configure_issue()
 {
-        local issue="$(jaq -r '.customization.issue' ${json_config})"
+        local issue="$(jaq -r '.customization.issue' "${json_config}")"
 
         # Return if already set in JSON config
         [[ -n "${issue}" ]] && return

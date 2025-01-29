@@ -2,7 +2,7 @@ function configure_vim_nvim()
 {
         local _vim _nvim
 
-        _vim="$(jaq -r '.packages.vim_nvim_configuration' ${json_config})"
+        _vim="$(jaq -r '.packages.vim_nvim_configuration' "${json_config}")"
 
         [[ -n "${_vim}" ]] && return
 
@@ -22,8 +22,8 @@ function configure_vim_nvim()
         done
 
         case "${ans}" in
-                [yY]) _vim=1 ;;
-                [nN]) _vim=0 ;;
+        [yY]) _vim=1 ;;
+        [nN]) _vim=0 ;;
         esac
 
         if [[ "${ans}" =~ ^[yY]$ ]]; then

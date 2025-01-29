@@ -1,6 +1,6 @@
 function menu_vconsole()
 {
-        local keymap="$(jaq -r '.system.keymap' ${json_config})"
+        local keymap="$(jaq -r '.system.keymap' "${json_config}")"
 
         # Return if it's already set in the JSON config.
         [[ -n "${keymap}" ]] && return
@@ -29,9 +29,9 @@ function menu_vconsole()
         done
 
         case "${ans}" in
-                0) keymap="us-acentos" ;;
-                1) keymap="us" ;;
-                2) keymap="fr" ;;
+        0) keymap="us-acentos" ;;
+        1) keymap="us" ;;
+        2) keymap="fr" ;;
         esac
 
         printf "%b" "${INFO} You chose ${C_P}${keymap}${N_F}.\n\n"

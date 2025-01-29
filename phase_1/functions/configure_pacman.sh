@@ -2,8 +2,8 @@ function configure_pacman()
 {
         local color par_down
 
-        color="$(jaq -r '.system.pacman.color' ${json_config})"
-        par_down="$(jaq -r '.system.pacman.parallel_downloads' ${json_config})"
+        color="$(jaq -r '.system.pacman.color' "${json_config}")"
+        par_down="$(jaq -r '.system.pacman.parallel_downloads' "${json_config}")"
 
         if [[ -z "${color}" ]]; then
                 color=1
@@ -24,7 +24,7 @@ function configure_pacman()
         if [[ -z "${par_down}" ]]; then
                 par_down=8
                 jaq -i '.system.pacman.parallel_downloads = "'"${par_down}"'"' \
-                "${json_config}"
+                        "${json_config}"
         fi
 
         printf "%b" "${INFO} Pacman option ${C_P}ParallelDownloads${N_F}: "

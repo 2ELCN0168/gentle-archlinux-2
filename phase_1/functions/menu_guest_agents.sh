@@ -1,10 +1,10 @@
 function menu_guest_agents()
 {
-        local g_agent="$(jaq -r '.packages.guest_agent' ${json_config})"
+        local g_agent="$(jaq -r '.packages.guest_agent' "${json_config}")"
 
         # Return if already set in JSON config
         [[ -n "${g_agent}" ]] && return
-        
+
         while true; do
                 title "Guest agents" "${C_C}" 40
 
@@ -30,10 +30,10 @@ function menu_guest_agents()
         done
 
         case "${ans}" in
-                0) g_agent="qemu-guest-agent" ;;
-                1) g_agent="virtualbox-guest-utils" ;;
-                2) g_agent="open-vm-tools" ;;
-                3) g_agent=" " ;;
+        0) g_agent="qemu-guest-agent" ;;
+        1) g_agent="virtualbox-guest-utils" ;;
+        2) g_agent="open-vm-tools" ;;
+        3) g_agent=" " ;;
         esac
 
         if [[ "${ans}" -ne 3 ]]; then

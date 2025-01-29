@@ -1,6 +1,6 @@
 function menu_net_manager()
 {
-        local network_manager="$(jaq -r '.network.net_manager' ${json_config})"
+        local network_manager="$(jaq -r '.network.net_manager' "${json_config}")"
 
         # Return if it's already set
         [[ -n "${network_manager}" ]] && return
@@ -29,15 +29,15 @@ function menu_net_manager()
         done
 
         case "${ans}" in
-                0)
-                        network_manager="systemd-networkd"
-                        ;;
-                1)
-                        network_manager="networkmanager"
-                        ;;
-                2)
-                        network_manager=""
-                        ;;
+        0)
+                network_manager="systemd-networkd"
+                ;;
+        1)
+                network_manager="networkmanager"
+                ;;
+        2)
+                network_manager=""
+                ;;
         esac
 
         if [[ "${ans}" -ne 2 ]]; then
@@ -46,5 +46,5 @@ function menu_net_manager()
         fi
 
         jaq -i '.network.net_manager = "'"${network_manager}"'"' \
-        "${json_config}"
+                "${json_config}"
 }

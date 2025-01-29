@@ -1,11 +1,11 @@
 function configure_user()
 {
         local active username home_dir administrator xdg_dirs
-        active="$(jaq -r '.system.users.user.active' ${json_config})"
-        username="$(jaq -r '.system.users.user.username' ${json_config})"
-        home_dir="$(jaq -r '.system.users.user.home_dir' ${json_config})"
-        administrator="$(jaq -r '.system.users.user.administrator' ${json_config})"
-        xdg_dirs="$(jaq -r '.system.users.user.xdg_dirs' ${json_config})"
+        active="$(jaq -r '.system.users.user.active' "${json_config}")"
+        username="$(jaq -r '.system.users.user.username' "${json_config}")"
+        home_dir="$(jaq -r '.system.users.user.home_dir' "${json_config}")"
+        administrator="$(jaq -r '.system.users.user.administrator' "${json_config}")"
+        xdg_dirs="$(jaq -r '.system.users.user.xdg_dirs' "${json_config}")"
 
         # Return if already set in JSON config.
         if [[ -n "${active}" ]]; then
@@ -33,7 +33,7 @@ function configure_user()
         elif [[ "${ans}" =~ ^[yY]$ ]]; then
                 jaq -i '.system.users.user.active = "1"' "${json_config}"
         fi
-        
+
         if [[ -z "${username}" ]]; then
                 _username
         fi
@@ -46,7 +46,7 @@ function configure_user()
                 _administrator
         fi
 
-         if [[ -z "${xdg_dirs}" ]]; then
+        if [[ -z "${xdg_dirs}" ]]; then
                 _xdg_dirs
         fi
 }
@@ -122,11 +122,11 @@ function _home_dir()
         done
 
         case "${ans}" in
-                [yY]) home_dir=1 ;;
-                [nN]) home_dir=0 ;;
+        [yY]) home_dir=1 ;;
+        [nN]) home_dir=0 ;;
         esac
 
-        jaq -i '.system.users.user.home_dir = "'"${home_dir}"'"' "${json_config}"        
+        jaq -i '.system.users.user.home_dir = "'"${home_dir}"'"' "${json_config}"
 }
 
 function _administrator()
@@ -152,12 +152,12 @@ function _administrator()
         done
 
         case "${ans}" in
-                [yY]) administrator=1 ;;
-                [nN]) administrator=0 ;;
+        [yY]) administrator=1 ;;
+        [nN]) administrator=0 ;;
         esac
 
         jaq -i '.system.users.user.administrator = "'"${administrator}"'"' \
-        "${json_config}"
+                "${json_config}"
 }
 
 function _xdg_dirs()
@@ -181,8 +181,8 @@ function _xdg_dirs()
         done
 
         case "${ans}" in
-                [yY]) xdg_dirs=1 ;;
-                [nN]) xdg_dirs=0 ;;
+        [yY]) xdg_dirs=1 ;;
+        [nN]) xdg_dirs=0 ;;
         esac
 
         jaq -i '.system.users.user.xdg_dirs = "'"${xdg_dirs}"'"' "${json_config}"

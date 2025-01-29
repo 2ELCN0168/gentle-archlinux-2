@@ -1,8 +1,8 @@
 function menu_swap()
 {
-        local swap 
-        swap="$(jaq -r '.system.swap' ${json_config})"
-        
+        local swap
+        swap="$(jaq -r '.system.swap' "${json_config}")"
+
         # Return if 'swap' is set in the JSON config.
         [[ -n "${swap}" ]] && return
 
@@ -22,7 +22,7 @@ function menu_swap()
                 : "${ans:=0}"
                 printf "%b" "\n"
 
-                if [[ "${ans}" =~ ^[0-2]$ ]]; then 
+                if [[ "${ans}" =~ ^[0-2]$ ]]; then
                         break
                 else
                         invalid_answer
@@ -30,9 +30,9 @@ function menu_swap()
         done
 
         case "${ans}" in
-               0) swap="swapfile" ;;
-               1) swap="zram" ;;
-               2) swap="none" ;;
+        0) swap="swapfile" ;;
+        1) swap="zram" ;;
+        2) swap="none" ;;
         esac
 
         jaq -i '.system.swap = "'"${swap}"'"' "${json_config}"

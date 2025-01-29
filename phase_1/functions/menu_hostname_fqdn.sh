@@ -1,6 +1,6 @@
 function menu_hostname()
 {
-        local _hostname="$(jaq -r '.system.hostname' ${json_config})"
+        local _hostname="$(jaq -r '.system.hostname' "${json_config}")"
 
         # Return if a hostname is provided in the JSON config.
         [[ -n "${_hostname}" ]] && return
@@ -11,7 +11,7 @@ function menu_hostname()
         local hostname_regex="^[a-zA-Z0-9][a-zA-Z0-9-]{0,62}$"
 
         # Hostname
-        
+
         printf "%b" "${Q} Enter your hostname without domain.\n"
         printf "%b" "${Q} Recommended hostname length: ${C_P}15 chars "
         printf "%b" "${C_Y}[a-z][A-Z][0-9].${N_F}\n"
@@ -44,8 +44,8 @@ function menu_hostname()
 
 function menu_domain_name()
 {
-        local domain_name="$(jaq -r '.system.domain_name' ${json_config})"
-        
+        local domain_name="$(jaq -r '.system.domain_name' "${json_config}")"
+
         # Return if a domain name is provided in the JSON config.
         [[ -n "${domain_name}" ]] && return
 
@@ -54,8 +54,8 @@ function menu_domain_name()
         # dot. Must not exceed 255 characters.
         local domain_regex="^([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}$"
 
-        # Domain name 
-        
+        # Domain name
+
         printf "%b" "${Q} Enter your domain name "
         printf "%b" "(${C_G}[a-z][A-Z][0-9][.-]${N_F}).\n"
         printf "%b" "${Q} It must no begin with a dot or a hyphen.\n"

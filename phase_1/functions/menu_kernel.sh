@@ -3,8 +3,8 @@ function menu_kernel()
         # TODO:
         # At systemd-boot installation, check for initramfs name
         # (cf. the same file in the original gentle-archlinux)
-        
-        local kernel="$(jaq -r '.system.kernel' ${json_config})"
+
+        local kernel="$(jaq -r '.system.kernel' "${json_config}")"
 
         # Return if it's already set in the JSON config
         [[ -n "${kernel}" ]] && return
@@ -34,27 +34,27 @@ function menu_kernel()
         done
 
         case "${ans}" in
-                0)
-                        printf "%b" "${INFO} You chose the standard Linux "
-                        printf "%b" "kernel.\n\n"
-                        kernel="linux"
-                        ;;
-                1)
-                        printf "%b" "${INFO} You chose the LTS Linux "
-                        printf "%b" "kernel. Useful for servers.\n\n"
-                        kernel="linux-lts"
-                        ;;
-                2)
-                        printf "%b" "${INFO} You chose the hardened Linux "
-                        printf "%b" "kernel. I see you're a paranoid, don't "
-                        printf "%b" "worry, we're three.\n\n"
-                        kernel="linux-hardened"
-                        ;;
-                3)
-                        printf "%b" "${INFO} You chose the zen Linux kernel."
-                        printf "%b" "\n\n"
-                        kernel="linux-zen"
-                        ;;
+        0)
+                printf "%b" "${INFO} You chose the standard Linux "
+                printf "%b" "kernel.\n\n"
+                kernel="linux"
+                ;;
+        1)
+                printf "%b" "${INFO} You chose the LTS Linux "
+                printf "%b" "kernel. Useful for servers.\n\n"
+                kernel="linux-lts"
+                ;;
+        2)
+                printf "%b" "${INFO} You chose the hardened Linux "
+                printf "%b" "kernel. I see you're a paranoid, don't "
+                printf "%b" "worry, we're three.\n\n"
+                kernel="linux-hardened"
+                ;;
+        3)
+                printf "%b" "${INFO} You chose the zen Linux kernel."
+                printf "%b" "\n\n"
+                kernel="linux-zen"
+                ;;
         esac
 
         jaq -i '.system.kernel = "'"${kernel}"'"' "${json_config}"

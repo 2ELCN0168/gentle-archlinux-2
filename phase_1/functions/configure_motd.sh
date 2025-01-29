@@ -1,6 +1,6 @@
 function configure_motd()
 {
-        local motd="$(jaq -r '.customization.motd' ${json_config})"
+        local motd="$(jaq -r '.customization.motd' "${json_config}")"
 
         # Return if already set in JSON config
         [[ -n "${motd}" ]] && return

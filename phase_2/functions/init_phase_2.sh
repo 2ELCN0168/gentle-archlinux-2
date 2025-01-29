@@ -12,7 +12,7 @@ function init_phase_2()
                         break
                 fi
                 sleep 0.33
-                for i in {1..2}; do
+                for a in {1..2}; do
                         printf "%b" "."
                         sleep 0.33
                 done

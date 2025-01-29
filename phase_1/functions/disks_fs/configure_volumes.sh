@@ -115,10 +115,10 @@ function add_volume()
                                 unit="${BASH_REMATCH[2],,}"
 
                                 case "${unit}" in
-                                g)
+                                "gib")
                                         sanitized_ans=$((sanitized_ans * 1024 * 1024 * 1024))
                                         ;;
-                                m)
+                                "mib")
                                         sanitized_ans=$((sanitized_ans * 1024 * 1024))
                                         ;;
                                 esac

@@ -70,7 +70,8 @@ function _username()
                 "cute-lizard"
         )
 
-        local default_username="$(shuf -n 1 -e ${username_list[@]})"
+        local default_username
+        default_username="$(shuf -n 1 -e "${username_list[@]}")"
 
         # REGEX:
         # Must start with a lowercase character or an underscore,

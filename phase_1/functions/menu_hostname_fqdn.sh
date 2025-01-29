@@ -1,6 +1,7 @@
 function menu_hostname()
 {
-        local _hostname="$(jaq -r '.system.hostname' "${json_config}")"
+        local _hostname
+        _hostname="$(jaq -r '.system.hostname' "${json_config}")"
 
         # Return if a hostname is provided in the JSON config.
         [[ -n "${_hostname}" ]] && return
@@ -20,7 +21,7 @@ function menu_hostname()
         local ans
 
         while true; do
-                read ans
+                read -r ans
                 : "${ans:=localhost}"
                 printf "%b" "\n"
 
@@ -44,7 +45,8 @@ function menu_hostname()
 
 function menu_domain_name()
 {
-        local domain_name="$(jaq -r '.system.domain_name' "${json_config}")"
+        local domain_name
+        domain_name="$(jaq -r '.system.domain_name' "${json_config}")"
 
         # Return if a domain name is provided in the JSON config.
         [[ -n "${domain_name}" ]] && return

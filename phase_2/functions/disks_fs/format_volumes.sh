@@ -40,7 +40,10 @@ function format_volumes()
                 fi
 
                 if [[ "${_lvm}" -eq 1 ]]; then
-                        mkfs."${filesystem}" "/dev/vg_archlinux/${i}"
+                        mkfs."${filesystem}" "/dev/vg_archlinux${i}"
+                        if [[ "${i}" == "/" ]]; then
+                                mkfs."${filesystem}" "/dev/vg_archlinux/root"
+                        fi
                 elif [[ "${_lvm}" -eq 0 ]]; then
                         echo "TODO"
                 fi

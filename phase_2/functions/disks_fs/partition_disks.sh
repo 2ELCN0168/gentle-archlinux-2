@@ -103,8 +103,9 @@ function partition_disks()
 
                 while IFS=$'\t' read -r mountpoint size; do
                         volumes["${mountpoint}"]="${size}"
-                done < <(cat ${json_config} \
-                        | jaq -r '.drive.volumes.volumes_list[] | "\(.mountpoint)\t\(.size)"')
+                done < <(jaq -r \
+                '.drive.volumes.volumes_list[] | "\(.mountpoint)\t\(.size)"' \
+                "${json_config}")
 
                 local partnum
                 # Start at partition number 2 if there was a boot volume created

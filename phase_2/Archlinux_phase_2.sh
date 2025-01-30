@@ -4,6 +4,7 @@ source "./phase_2/functions/init_phase_2.sh"
 source "./phase_2/functions/disks_fs/partition_disks.sh"
 source "./phase_2/functions/disks_fs/create_luks.sh"
 source "./phase_2/functions/disks_fs/create_lvm.sh"
+source "./phase_2/functions/disks_fs/format_volumes.sh"
 
 function main()
 {
@@ -14,6 +15,8 @@ function main()
         create_luks
 
         create_lvm
+
+        format_volumes
 }
 
 main

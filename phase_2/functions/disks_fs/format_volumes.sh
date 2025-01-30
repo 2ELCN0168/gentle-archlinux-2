@@ -1,7 +1,8 @@
 function format_volumes()
 {
-        local _drive filesystem
+        local _drive _lvm filesystem
         _drive="$(jaq -r '.drive.drive' "${json_config}")"
+        _lvm="$(jaq -r '.drive.lvm' "${json_config}")"
         filesystem="$(jaq -r '.drive.filesystem' "${json_config}")"
 
         declare -A volumes_list
@@ -38,6 +39,10 @@ function format_volumes()
                         continue
                 fi
 
-                mkfs."${filesystem}" "/dev/${i}"
+                if [[ "${_lvm}" -eq 1 ]]; then
+                        mkfs."${filesystem}" "/dev/vg_archlinux/${i}"
+                elif [[ "${_lvm}" -eq 0 ]]; then
+                        echo "TODO"
+                fi
         done
 }

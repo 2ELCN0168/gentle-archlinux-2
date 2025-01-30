@@ -22,5 +22,5 @@ function menu_lvm()
 
         printf "%b" "${INFO} LVM is set to: ${C_C}${is_lvm}${N_F}.\n\n"
 
-        jaq -i '.drive.lvm = '"${is_lvm}"'"' "${json_config}"
+        jaq -i '.drive.lvm = "'"${is_lvm}"'"' "${json_config}"
 }

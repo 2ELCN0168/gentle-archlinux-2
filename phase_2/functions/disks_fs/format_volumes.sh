@@ -1,51 +1,52 @@
 function format_volumes()
 {
-        local _drive _lvm filesystem
-        _drive="$(jaq -r '.drive.drive' "${json_config}")"
-        _lvm="$(jaq -r '.drive.lvm' "${json_config}")"
+        local is_lvm filesystem disk
+
+        is_lvm="$(jaq -r '.drive.lvm' "${json_config}")"
         filesystem="$(jaq -r '.drive.filesystem' "${json_config}")"
+        disk="$(jaq -r '.drive.drive' "${json_config}")"
 
-        declare -A volumes_list
+        declare -A volumes
 
+        # Get every ["mountpoint"]="size".
         while IFS=$'\t' read -r mountpoint size; do
-                volumes_list["${mountpoint}"]="${size}"
+                volumes["${mountpoint}"]="${size}"
         done < <(jaq -r \
-                '.drive.volumes.volumes_list[] | "\(.mountpoint)\t\(.size)"' \
+                '.drive.volumes.volumes_list[] | "\(mountpoint)\t\(.size)"' \
                 "${json_config}")
 
-        local has_boot_vol=0
-        local has_efi=0
+        if [[ "${is_lvm}" -eq 0 ]]; then
+                format_no_lvm "${filesystem}" "${disk}" "${volumes[@]}"
+        elif [[ "${is_lvm}" -eq 1 ]]; then
+                format_lvm "${filesystem}" "${disk}" "${volumes[@]}"
+        fi
+}
 
-        for i in "${!volumes_list[@]}"; do
-                if [[ "${i}" == "/efi" ]]; then
-                        has_boot_vol=1
-                        has_efi=1
-                elif [[ "${i}" == "/boot" ]]; then
-                        has_boot_vol=1
-                fi
-        done
+function format_no_lvm()
+{
+        local filesystem disk volumes counter
+        filesystem="${1}"
+        disk="${2}"
+        volumes="${3}"
+        counter=2
 
-        if [[ "${has_boot_vol}" -eq 1 ]]; then
-                mkfs.fat -F 32 -l "ESP" "/dev/${_drive}1" 1> "/dev/null"
+        # The EFI partition should never have another label than "ESP".
+        if [[ "${!volumes[*]}" =~ "/efi" ]]; then
+                local efi_part
+                efi_part="$(blkid -L ESP)"
         fi
 
-        for i in "${!volumes_list[@]}"; do
-                # Skip efi volume.
+        for i in "${!volumes[@]}"; do
                 if [[ "${i}" == "/efi" ]]; then
-                        continue
-                fi
-                # Skip boot volume if no efi volume.
-                if [[ "${i}" == "/boot" && "${has_efi}" -eq 0 ]]; then
+                        mkfs.fat -F 32 "${efi_part}"
                         continue
                 fi
 
-                if [[ "${_lvm}" -eq 1 ]]; then
-                        mkfs."${filesystem}" "/dev/vg_archlinux${i}" 1> "/dev/null"
-                        if [[ "${i}" == "/" ]]; then
-                                mkfs."${filesystem}" "/dev/vg_archlinux/root" 1> "/dev/null"
-                        fi
-                elif [[ "${_lvm}" -eq 0 ]]; then
-                        echo "TODO"
+                if ! mkfs."${filesystem}" "/dev/${disk}${counter}" \
+                        1> "/dev/null"; then
+                        break
+                else
+                        ((counter++))
                 fi
         done
 }

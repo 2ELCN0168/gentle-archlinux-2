@@ -26,7 +26,7 @@ function format_volumes()
         done
 
         if [[ "${has_boot_vol}" -eq 1 ]]; then
-                mkfs.fat -F 32 -l "ESP" "/dev/${_drive}1"
+                mkfs.fat -F 32 -l "ESP" "/dev/${_drive}1" 1> "/dev/null"
         fi
 
         for i in "${!volumes_list[@]}"; do
@@ -40,9 +40,9 @@ function format_volumes()
                 fi
 
                 if [[ "${_lvm}" -eq 1 ]]; then
-                        mkfs."${filesystem}" "/dev/vg_archlinux${i}"
+                        mkfs."${filesystem}" "/dev/vg_archlinux${i}" 1> "/dev/null"
                         if [[ "${i}" == "/" ]]; then
-                                mkfs."${filesystem}" "/dev/vg_archlinux/root"
+                                mkfs."${filesystem}" "/dev/vg_archlinux/root" 1> "/dev/null"
                         fi
                 elif [[ "${_lvm}" -eq 0 ]]; then
                         echo "TODO"

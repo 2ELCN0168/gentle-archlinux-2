@@ -11,9 +11,27 @@ function pacstrap_installation()
         kernel="$(jaq -r '.system.kernel' "${json_config}")"
 
         local base_packages net_tools monitoring_tools _zsh help_tools
+        base_packages="$(jaq -r '.packages.base_packages' "${json_config}")"
         net_tools="$(jaq -r '.packages.install_net_tools' "${json_config}")"
         monitoring_tools="$(jaq -r '.packages.install_monitoring_tools' "${json_config}")"
         help_tools="$(jaq -r '.packages.install_help_tools' "${json_config}")"
+
+        packages+=("${base_packages[@]}")
+
+        if [[ "${net_tools}" -eq 1 ]]; then
+                net_tools="$(jaq -r '.packages.net_tools' "${json_config}")"
+                packages+=("${net_tools[@]}")
+        fi
+
+        if [[ "${monitoring_tools}" -eq 1 ]]; then
+                monitoring_tools="$(jaq -r '.packages.monitoring_tools' "${json_config}")"
+                packages+=("${monitoring_tools[@]}")
+        fi
+
+        if [[ "${help_tools}" -eq 1 ]]; then
+                help_tools="$(jaq -r '.packages.help_tools' "${json_config}")"
+                packages+=("${help_tools[@]}")
+        fi
 
         sed -i '/^#\(Color\|ParallelDownloads\)/s/^#//' "/etc/pacman.conf"
 

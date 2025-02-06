@@ -15,6 +15,8 @@ function pacstrap_installation()
         monitoring_tools="$(jaq -r '.packages.install_monitoring_tools' "${json_config}")"
         help_tools="$(jaq -r '.packages.install_help_tools' "${json_config}")"
 
+        sed -i '/^#\(Color\|ParallelDownloads\)/s/^#//' "/etc/pacman.conf"
+
         if [[ "${_lvm}" -eq 1 ]]; then
                 packages+=("lvm2")
         fi

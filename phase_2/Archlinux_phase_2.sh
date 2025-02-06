@@ -5,6 +5,7 @@ source "./phase_2/functions/disks_fs/partition_disks.sh"
 source "./phase_2/functions/disks_fs/create_luks.sh"
 source "./phase_2/functions/disks_fs/create_lvm.sh"
 source "./phase_2/functions/disks_fs/format_volumes.sh"
+source "./phase_2/functions/disks_fs/mount_volumes.sh"
 
 function main()
 {
@@ -17,6 +18,8 @@ function main()
         create_lvm
 
         format_volumes
+
+        mount_volumes
 }
 
 main

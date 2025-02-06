@@ -1,3 +1,6 @@
+# TODO:
+# This is very uncomplete
+
 function format_volumes()
 {
         local is_lvm filesystem disk
@@ -81,7 +84,7 @@ function format_lvm()
         done
 
         for i in "/dev/vg_archlinux/"*; do
-                mkfs."${filesystem}" "/dev/vg_archlinux/${i}"
+                mkfs."${filesystem}" "${i}" -L "$(basename "${i}")"
         done
 
 }

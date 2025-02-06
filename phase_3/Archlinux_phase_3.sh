@@ -1,4 +1,4 @@
-source "./phase_2/functions/hwclock.sh"
+source "./phase_3/functions/hwclock.sh"
 
 function main()
 {

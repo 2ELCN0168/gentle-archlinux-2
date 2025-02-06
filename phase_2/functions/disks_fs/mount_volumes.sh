@@ -18,7 +18,9 @@ function mount_volumes()
                         mount --mkdir "$(blkid -L boot)" "/mnt/boot"
                         mount_log "${i}" "/mnt/boot"
                 fi
+        done
 
+        for i in ${volumes_table[@]}; do
                 if [[ "${i}" == "ESP" ]]; then
                         mount --mkdir "$(blkid -L ESP)" "/mnt/efi"
                         mount_log "${i}" "/mnt/efi"

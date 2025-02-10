@@ -1,14 +1,9 @@
 function configure_user()
 {
-        local active username home_dir administrator xdg_dirs
-        active="$(jaq -r '.system.users.user.active' "${json_config}")"
-        username="$(jaq -r '.system.users.user.username' "${json_config}")"
-        home_dir="$(jaq -r '.system.users.user.home_dir' "${json_config}")"
-        administrator="$(jaq -r '.system.users.user.administrator' "${json_config}")"
-        xdg_dirs="$(jaq -r '.system.users.user.xdg_dirs' "${json_config}")"
+        local username home_dir administrator xdg_dirs
 
-        # Return if already set in JSON config.
-        if [[ -n "${active}" ]]; then
+        # If the user doesn't want to create a user, return.
+        if [[ -n "${user_active}" && "${user_active}" -eq 0 ]]; then
                 return
         fi
 
@@ -28,10 +23,10 @@ function configure_user()
         # Exit if the user doesn't want to create a user (lol).
         if [[ "${ans}" =~ ^[nN]$ ]]; then
                 printf "%b" "${INFO} No user will be created.\n\n"
-                jaq -i '.system.users.user.active = "0"' "${json_config}"
+                update_config "user_active" "0" "${bash_config}"
                 return
         elif [[ "${ans}" =~ ^[yY]$ ]]; then
-                jaq -i '.system.users.user.active = "1"' "${json_config}"
+                update_config "user_active" "1" "${bash_config}"
         fi
 
         if [[ -z "${username}" ]]; then
@@ -100,7 +95,7 @@ function _username()
                 fi
         done
 
-        jaq -i '.system.users.user.username = "'"${ans}"'"' "${json_config}"
+        update_config "user_username" "${ans}" "${bash_config}"
 }
 
 function _home_dir()
@@ -127,7 +122,7 @@ function _home_dir()
         [nN]) home_dir=0 ;;
         esac
 
-        jaq -i '.system.users.user.home_dir = "'"${home_dir}"'"' "${json_config}"
+        update_config "${user_home_dir}" "${home_dir}" "${bash_config}"
 }
 
 function _administrator()
@@ -157,8 +152,8 @@ function _administrator()
         [nN]) administrator=0 ;;
         esac
 
-        jaq -i '.system.users.user.administrator = "'"${administrator}"'"' \
-                "${json_config}"
+        update_config "${user_administrator}" "${administrator}" \
+                "${bash_config}"
 }
 
 function _xdg_dirs()
@@ -186,5 +181,5 @@ function _xdg_dirs()
         [nN]) xdg_dirs=0 ;;
         esac
 
-        jaq -i '.system.users.user.xdg_dirs = "'"${xdg_dirs}"'"' "${json_config}"
+        update_config "${user_xdg_dirs}" "${xdg_dirs}" "${bash_config}"
 }

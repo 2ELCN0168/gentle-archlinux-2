@@ -1,15 +1,14 @@
 function configure_vim_nvim()
 {
-        local _vim _nvim
+        local _vim
 
-        _vim="$(jaq -r '.packages.vim_nvim_configuration' "${json_config}")"
-
-        [[ -n "${_vim}" ]] && return
+        [[ -n "${packages_vim_nvim_configuration}" ]] && return
 
         local ans
 
         while true; do
-                printf "%b" "${Q} Do you want to deploy Vim/Neovim configuration files? [Y/n] -> "
+                printf "%b" "${Q} Do you want to deploy Vim/Neovim "
+                printf "%b" "configuration files? [Y/n] -> "
 
                 read -r ans
                 : "${ans:=Y}"
@@ -28,9 +27,12 @@ function configure_vim_nvim()
 
         if [[ "${ans}" =~ ^[yY]$ ]]; then
                 printf "%b" "\n"
-                printf "%b" "${INFO} The files will be deployed in ${C_P}/etc/skel/.config, /root/.config${N_F}\n"
-                printf "%b" "and in your home directory if you create an user.\n\n"
+                printf "%b" "${INFO} The files will be deployed in "
+                printf "%b" "${C_P}/etc/skel/.config, /root/.config${N_F}\n"
+                printf "%b" "and in your home directory if you create an user."
+                printf "%b" "\n\n"
         fi
 
-        jaq -i '.packages.vim_nvim_configuration = '"${_vim}" "${json_config}"
+        update_config "packages_vim_nvim_configuration" "${_vim}" \
+                "${bash_config}"
 }

@@ -1,9 +1,9 @@
 function menu_vconsole()
 {
-        local keymap="$(jaq -r '.system.keymap' "${json_config}")"
+        local keymap
 
-        # Return if it's already set in the JSON config.
-        [[ -n "${keymap}" ]] && return
+        # Return if it's already set in the bash config.
+        [[ -n "${system_keymap}" ]] && return
 
         while true; do
                 title "Keymap" "${C_C}" 40
@@ -36,5 +36,5 @@ function menu_vconsole()
 
         printf "%b" "${INFO} You chose ${C_P}${keymap}${N_F}.\n\n"
 
-        jaq -i '.system.keymap = "'"${keymap}"'"' "${json_config}"
+        update_config "system_keymap" "${keymap}" "${bash_config}"
 }

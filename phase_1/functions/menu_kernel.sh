@@ -4,10 +4,10 @@ function menu_kernel()
         # At systemd-boot installation, check for initramfs name
         # (cf. the same file in the original gentle-archlinux)
 
-        local kernel="$(jaq -r '.system.kernel' "${json_config}")"
+        local kernel
 
-        # Return if it's already set in the JSON config
-        [[ -n "${kernel}" ]] && return
+        # Return if it's already set in the bash config.
+        [[ -n "${system_kernel}" ]] && return
 
         while true; do
                 title "Kernel" "${C_C}" 40
@@ -57,5 +57,5 @@ function menu_kernel()
                 ;;
         esac
 
-        jaq -i '.system.kernel = "'"${kernel}"'"' "${json_config}"
+        update_config "system_kernel" "${kernel}" "${bash_config}"
 }

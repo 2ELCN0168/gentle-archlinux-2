@@ -1,9 +1,9 @@
 function menu_lvm()
 {
-        local is_lvm="$(jaq -r '.drive.lvm' "${json_config}")"
+        local is_lvm
 
-        # Return if 'lvm' is set in the JSON config.
-        [[ -n "${is_lvm}" ]] && return
+        # Return if 'disk_lvm' is set in the bash config.
+        [[ -n "${disk_lvm}" ]] && return
 
         while true; do
                 printf "%b" "${Q} Do you want to use ${C_C}LVM${N_F}? [y/N] -> "
@@ -22,5 +22,5 @@ function menu_lvm()
 
         printf "%b" "${INFO} LVM is set to: ${C_C}${is_lvm}${N_F}.\n\n"
 
-        jaq -i '.drive.lvm = "'"${is_lvm}"'"' "${json_config}"
+        update_config "disk_lvm" "${is_lvm}" "${bash_config}"
 }

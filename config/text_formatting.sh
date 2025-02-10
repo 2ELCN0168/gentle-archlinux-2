@@ -26,43 +26,56 @@ function text_formatting()
         export SUC="${C_G}[@]${N_F}"
         export WARN="${C_Y}[!]${N_F}"
         export ERR="${C_R}[*]${N_F}"
+}
+function title()
+{
+        # Usage: title "Some text" [<"${C_C}"> [<length>]]
 
-        function title()
-        {
-                # Usage: title "Some text" [<"${C_C}"> [<length>]]
+        local title="${1}"
+        local color="${2:-${N_F}}"
 
-                local title="${1}"
-                local color="${2:-${N_F}}"
-                
-                # NOTE:
-                # 30 is the default width if nothing is provided as argument 3
-                local total_width="${3:-30}"
-                local inner_width=$((total_width - 2))
-                local padding=$(((inner_width - ${#title}) / 2))
+        # NOTE:
+        # 30 is the default width if nothing is provided as argument 3
+        local total_width="${3:-30}"
+        local inner_width=$((total_width - 2))
+        local padding=$(((inner_width - ${#title}) / 2))
 
-                local spaces_l="$(printf '%*s' "${padding}" '')"
-                local spaces_r="$(printf '%*s' \
+        local spaces_l="$(printf '%*s' "${padding}" '')"
+        local spaces_r="$(
+                printf '%*s' \
                         "$((inner_width - ${#title} - padding))" ''
-                )"
+        )"
 
-                local colored_txt="${color}${spaces_l}${title}${spaces_r}${N_F}"
-                
-                local border_top="╒$(printf '═%.0s' $(seq 1 ${inner_width}))╕"
-                local border_btm="└$(printf '─%.0s' $(seq 1 ${inner_width}))┘"
+        local colored_txt="${color}${spaces_l}${title}${spaces_r}${N_F}"
 
-                printf "%b" "\n${border_top}\n"
-                printf "%b" "╡${colored_txt}╞\n"
-                printf "%b" "${border_btm}\n\n"
-        }
+        local border_top="╒$(printf '═%.0s' $(seq 1 ${inner_width}))╕"
+        local border_btm="└$(printf '─%.0s' $(seq 1 ${inner_width}))┘"
 
-        function invalid_answer()
-        {
-                printf "%b" "${C_W}> ${WARN} ${C_R}Not a valid answer."
-                printf "%b" "${N_F}\n\n"
-        }
+        printf "%b" "\n${border_top}\n"
+        printf "%b" "╡${colored_txt}╞\n"
+        printf "%b" "${border_btm}\n\n"
+}
 
-        function silent()
-        {
-                "${@}" 1> "/dev/null" 2>&1
-        }
+function invalid_answer()
+{
+        printf "%b" "${C_W}> ${WARN} ${C_R}Not a valid answer."
+        printf "%b" "${N_F}\n\n"
+}
+
+function silent()
+{
+        "${@}" 1> "/dev/null" 2>&1
+}
+
+function update_config()
+{
+        local key="${1}"
+        local value="${2}"
+        local file="${3}"
+
+        if grep -q "^${key}=" "${file}"; then
+                sed -i "s|^${key}=.*|${key}=\"${value}\"|" "${file}"
+        else
+                echo "${key}=\"${value}\"" >> "${file}"
+        fi
 }

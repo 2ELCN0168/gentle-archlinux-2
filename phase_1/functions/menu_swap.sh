@@ -1,10 +1,9 @@
 function menu_swap()
 {
         local swap
-        swap="$(jaq -r '.system.swap' "${json_config}")"
 
-        # Return if 'swap' is set in the JSON config.
-        [[ -n "${swap}" ]] && return
+        # Return if 'system_swap' is set in the bash config.
+        [[ -n "${system_swap}" ]] && return
 
         while true; do
                 title "Swap" "${C_C}" 40
@@ -35,5 +34,5 @@ function menu_swap()
         2) swap="none" ;;
         esac
 
-        jaq -i '.system.swap = "'"${swap}"'"' "${json_config}"
+        update_config "system_swap" "${swap}" "${bash_config}"
 }

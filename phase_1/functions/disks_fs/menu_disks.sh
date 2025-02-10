@@ -3,10 +3,14 @@ function menu_disks()
         # May need to check if the list is not empty in the JSON config
         local _drive is_nvme
 
-        _drive="$(jaq -r '.drive.drive' "${json_config}")"
+        if [[ -n "${disk_drive}" && "${disk_drive}" =~ ^nvme.*$ ]]; then
+                update_config "disk_contains_nvme" "1" "${bash_config}"
+        else
+                update_config "disk_contains_nvme" "0" "${bash_config}"
+        fi
 
-        # Skip if the disk is already set in the JSON config
-        [[ -n "${_drive}" ]] && return
+        # Return if already set in bash config.
+        [[ -n "${disk_drive}" ]] && return
 
         while true; do
 
@@ -38,11 +42,10 @@ function menu_disks()
 
         # If there is a nvme, add nvme flag.
         if [[ "${_drive}" =~ ^nvme.*$ ]]; then
-                is_nvme=1
+                update_config "disk_contains_nvme" "1" "${bash_config}"
         else
-                is_nvme=0
+                update_config "disk_contains_nvme" "0" "${bash_config}"
         fi
 
-        jaq -i '.drive.contains_nvme = "'"${is_nvme}"'"' "${json_config}"
-        jaq -i '.drive.drive = "'"${_drive}"'"' "${json_config}"
+        update_config "disk_drive" "${_drive}" "${bash_config}"
 }

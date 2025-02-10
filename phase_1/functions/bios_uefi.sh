@@ -1,10 +1,9 @@
 function bios_uefi()
 {
         local efi_path="/sys/firmware/efi/fw_platform_size"
-        local uefi=$(jaq -r '.system.uefi' "${json_config}")
 
-        # Return if 'uefi' is set in JSON config.
-        [[ -n "${uefi}" ]] && return
+        # Return if 'uefi' is set in bash config.
+        [[ -n "${system_uefi}" ]] && return
 
         if [[ -f "${efi_path}" ]]; then
                 uefi=1
@@ -16,5 +15,5 @@ function bios_uefi()
                 printf "%b" "Bootloader choice is set to ${C_R}GRUB${N_F}\n\n"
         fi
 
-        jaq -i '.system.uefi = '"${uefi}" "${json_config}"
+        update_config "system_uefi" "${uefi}" "${bash_config}"
 }

@@ -1,9 +1,9 @@
 function menu_guest_agents()
 {
-        local g_agent="$(jaq -r '.packages.guest_agent' "${json_config}")"
+        local g_agent
 
-        # Return if already set in JSON config
-        [[ -n "${g_agent}" ]] && return
+        # Return if already set in bash config.
+        [[ -n "${packages_guest_agent}" ]] && return
 
         while true; do
                 title "Guest agents" "${C_C}" 40
@@ -43,5 +43,5 @@ function menu_guest_agents()
                 printf "%b" "${INFO} No guest-agent will be installed.\n\n"
         fi
 
-        jaq -i '.packages.guest_agent = "'"${g_agent}"'"' "${json_config}"
+        update_config "packages_guest_agent" "${g_agent}" "${bash_config}"
 }

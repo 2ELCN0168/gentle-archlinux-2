@@ -5,26 +5,22 @@ function configure_mkinitcpio()
 
         local _btrfs _luks _lvm
 
-        _btrfs="$(jaq -r '.drive.filesystem' "${json_config}")"
-        _luks="$(jaq -r '.drive.encryption' "${json_config}")"
-        _lvm="$(jaq -r '.drive.lvm' "${json_config}")"
-
         # The filesystem must be btrfs only (just for the hook)
-        if [[ "${_btrfs}" == "btrfs" ]]; then
+        if [[ "${disk_filesystem}" == "btrfs" ]]; then
                 _btrfs="btrfs "
-        elif [[ "${_btrfs}" != "btrfs" ]]; then
+        elif [[ "${disk_filesystem}" != "btrfs" ]]; then
                 _btrfs=""
         fi
 
-        if [[ "${_luks}" -eq 1 ]]; then
+        if [[ "${disk_encryption}" -eq 1 ]]; then
                 _encryption="sd-encrypt "
-        elif [[ "${_luks}" -eq 0 ]]; then
+        elif [[ "${disk_encryption}" -eq 0 ]]; then
                 _encryption=""
         fi
 
-        if [[ "${_lvm}" -eq 1 ]]; then
+        if [[ "${disk_lvm}" -eq 1 ]]; then
                 _lvm="lvm2 "
-        elif [[ "${_lvm}" -eq 0 ]]; then
+        elif [[ "${disk_lvm}" -eq 0 ]]; then
                 _lvm=""
         fi
 
@@ -32,8 +28,7 @@ function configure_mkinitcpio()
 
         hooks="base systemd ${_btrfs}autodetect modconf kms keyboard sd-vconsole ${_encryption}block ${_lvm}filesystems fsck"
 
-        jaq -i '.system.initcpio_hooks = "'"${hooks}"'"' "${json_config}"
+        update_config "system_mkinitcpio_hooks" "${hooks}" "${bash_config}"
 
         printf "%b" "${INFO} Changed initcpio hooks to: ${C_P}${hooks}${N_F}.\n\n"
 }
-

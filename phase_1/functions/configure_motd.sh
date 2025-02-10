@@ -1,9 +1,8 @@
 function configure_motd()
 {
-        local motd="$(jaq -r '.customization.motd' "${json_config}")"
 
-        # Return if already set in JSON config
-        [[ -n "${motd}" ]] && return
+        # Return if already set in bash config
+        [[ -n "${custom_motd}" ]] && return
 
         printf "%b" "${Q} Would you like to setup a ${C_P}/etc/motd${N_F} "
         printf "%b" "file [Y/n] -> "
@@ -31,5 +30,5 @@ function configure_motd()
                 printf "%b" "created.\n\n"
         fi
 
-        jaq -i '.customization.motd = "'"${motd}"'"' "${json_config}"
+        update_config "custom_motd" "${motd}" "${bash_config}"
 }

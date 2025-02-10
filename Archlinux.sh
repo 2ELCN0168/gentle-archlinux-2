@@ -6,6 +6,9 @@
 # NOTE: This part only sets up the JSON configuration file.
 
 # source "./phase_1/functions/"
+if [[ -f "./config/config.sh" ]]; then
+        source "./config/config.sh"
+fi
 source "./config/text_formatting.sh"
 source "./phase_1/functions/greetings.sh"
 source "./phase_1/functions/lvm_luks/lvm_luks_scanning.sh"
@@ -52,11 +55,12 @@ function main()
         local total_options
 
         # Create the file if it doesn't exist.
-        if [[ ! -e "./config/config.json" ]]; then
-                cp -a "./config/config_template.json" "./config/config.json"
+        if [[ ! -e "./config/config.sh" ]]; then
+                cp -a "./config/config_base.sh" "./config/config.sh"
+                source "./config/config.sh"
         fi
 
-        export json_config="./config/config.json"
+        export bash_config="./config/config.sh"
 
         while getopts "cehm" opt; do
                 case "${opt}" in

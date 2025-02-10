@@ -1,10 +1,7 @@
 function menu_hostname()
 {
-        local _hostname
-        _hostname="$(jaq -r '.system.hostname' "${json_config}")"
-
-        # Return if a hostname is provided in the JSON config.
-        [[ -n "${_hostname}" ]] && return
+        # Return if a hostname is provided in the bash config.
+        [[ -n "${system_hostname}" ]] && return
 
         # REGEX:
         # Must start with a-Z or A-Z or 0-9. Hyphens are allowed after the first
@@ -40,16 +37,13 @@ function menu_hostname()
                 fi
         done
 
-        jaq -i '.system.hostname = "'"${ans}"'"' "${json_config}"
+        update_config "system_hostname" "${ans}" "${bash_config}"
 }
 
 function menu_domain_name()
 {
-        local domain_name
-        domain_name="$(jaq -r '.system.domain_name' "${json_config}")"
-
-        # Return if a domain name is provided in the JSON config.
-        [[ -n "${domain_name}" ]] && return
+        # Return if a domain name is provided in the bash config.
+        [[ -n "${system_domain_name}" ]] && return
 
         # REGEX:
         # Must start with a-z, A-Z, 0-9. Cannot begin or end with a hyphen or a
@@ -87,5 +81,5 @@ function menu_domain_name()
                 fi
         done
 
-        jaq -i '.system.domain_name = "'"${ans}"'"' "${json_config}"
+        update_config "system_domain_name" "${ans}" "${bash_config}"
 }

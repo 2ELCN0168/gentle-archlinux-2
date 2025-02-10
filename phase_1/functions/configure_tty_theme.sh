@@ -1,9 +1,7 @@
 function configure_tty_theme()
 {
-        local theme="$(jaq -r '.customization.tty_theme' "${json_config}")"
-
-        # Return if already set in the JSON config.
-        [[ -n "${theme}" ]] && return
+        # Return if already set in the bash config.
+        [[ -n "${custom_tty_theme}" ]] && return
 
         local ans
 
@@ -38,53 +36,44 @@ function configure_tty_theme()
                 fi
         done
 
-        local theme_pretty theme theme_brightness
+        local theme_pretty theme
 
         case "${ans}" in
         0)
                 theme_pretty="Catppuccin latte"
                 theme="catppuccin_latte.sh"
-                theme_brightness=1
                 ;;
         1)
                 theme_pretty="Tokyonight Storm"
                 theme="tokyonight_storm.sh"
-                theme_brightness=0
                 ;;
         2)
                 theme_pretty="Red impact"
                 theme="red_impact.sh"
-                theme_brightness=0
                 ;;
         3)
                 theme_pretty="Dracula"
                 theme="dracula.sh"
-                theme_brightness=0
                 ;;
         4)
                 theme_pretty="Mono Amber"
                 theme="mono_amber.sh"
-                theme_brightness=0
                 ;;
         5)
                 theme_pretty="Mono Green"
                 theme="mono_green.sh"
-                theme_brightness=0
                 ;;
         6)
                 theme_pretty="Powershell"
                 theme="powershell.sh"
-                theme_brightness=0
                 ;;
         7)
                 theme_pretty="Synthwave 86"
                 theme="synthwave86.sh"
-                theme_brightness=0
                 ;;
         8)
                 theme_pretty="Everforest Dark"
                 theme="everforest_dark.sh"
-                theme_brightness=0
                 ;;
         9)
                 theme_pretty="Default"
@@ -93,8 +82,5 @@ function configure_tty_theme()
 
         printf "%b" "${INFO} You chose ${C_P}${theme_pretty}${N_F}.\n\n"
 
-        jaq -i '.customization.tty_theme = "'"${theme}"'"' "${json_config}"
-        jaq -i '.customization.tty_theme_brightness = "'"${theme_brightness}"'"' \
-                "${json_config}"
+        update_config "custom_tty_theme" "${theme}" "${bash_config}"
 }
-

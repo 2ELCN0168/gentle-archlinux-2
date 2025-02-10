@@ -1,9 +1,9 @@
 function menu_luks()
 {
-        local drive_encryption="$(jaq -r '.drive.encryption' "${json_config}")"
+        local _encryption
 
-        # Return if 'drive_encryption' is set in the JSON config.
-        [[ -n "${drive_encryption}" ]] && return
+        # Return if 'disk_encryption' is set in the bash config.
+        [[ -n "${disk_encryption}" ]] && return
 
         while true; do
                 printf "%b" "${Q} Do you want your system to be encrypted with "
@@ -13,16 +13,20 @@ function menu_luks()
                 read -r ans
                 : "${ans:=N}"
 
-                [[ "${ans}" =~ ^[yYnN]$ ]] && break || invalid_answer
+                if [[ "${ans}" =~ ^[yYnN]$ ]]; then
+                        break
+                else
+                        invalid_answer
+                fi
         done
 
         if [[ "${ans}" =~ ^[yY]$ ]]; then
-                drive_encryption=1
+                _encryption=1
                 printf "%b" "${INFO} Your drive will be encrypted.\n\n${N_F}"
         elif [[ "${ans}" =~ ^[nN]$ ]]; then
-                drive_encryption=0
+                _encryption=0
                 printf "%b" "${INFO} Your drive won't be encrypted.\n\n${N_F}"
         fi
 
-        jaq -i '.drive.encryption = '"${drive_encryption}" "${json_config}"
+        update_config "disk_encryption" "${_encryption}" "${bash_config}"
 }

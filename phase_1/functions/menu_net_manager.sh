@@ -1,6 +1,6 @@
 function menu_net_manager()
 {
-        local network_manager="$(jaq -r '.network.net_manager' "${json_config}")"
+        local network_manager
 
         # Return if it's already set
         [[ -n "${network_manager}" ]] && return
@@ -45,6 +45,5 @@ function menu_net_manager()
                 printf "%b" "${N_F}.\n\n"
         fi
 
-        jaq -i '.network.net_manager = "'"${network_manager}"'"' \
-                "${json_config}"
+        update_config "network_manager" "${network_manager}" "${bash_config}"
 }

@@ -1,9 +1,7 @@
 function configure_issue()
 {
-        local issue="$(jaq -r '.customization.issue' "${json_config}")"
-
-        # Return if already set in JSON config
-        [[ -n "${issue}" ]] && return
+        # Return if already set in bash config
+        [[ -n "${custom_issue}" ]] && return
 
         printf "%b" "${Q} Would you like to setup a ${C_P}/etc/issue${N_F} "
         printf "%b" "file [Y/n] -> "
@@ -31,5 +29,5 @@ function configure_issue()
                 printf "%b" "created.\n\n"
         fi
 
-        jaq -i '.customization.issue = "'"${issue}"'"' "${json_config}"
+        update_config "custom_issue" "${issue}" "${bash_config}"
 }

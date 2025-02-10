@@ -1,10 +1,9 @@
 function menu_root_account()
 {
         local root_account
-        root_account="$(jaq -r '.system.users.root_account' "${json_config}")"
 
         # Return if root_account is set in the JSON config.
-        [[ -n "${root_account}" ]] && return
+        [[ -n "${user_root_account}" ]] && return
 
         while true; do
                 printf "%b" "${Q} Do you want to lock the root account? "
@@ -28,8 +27,9 @@ function menu_root_account()
         esac
 
         if [[ "${ans}" =~ ^[yY]$ ]]; then
-                printf "%b" "${INFO} ${C_R}root${N_F} account will be locked.\n\n"
+                printf "%b" "${INFO} ${C_R}root${N_F} account will be locked."
+                printf "%b" "\n\n"
         fi
 
-        jaq -i 'system.users.root_account = '"${root_account}" "${json_config}"
+        update_config "user_root_account" "${root_account}" "${bash_config}"
 }

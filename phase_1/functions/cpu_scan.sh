@@ -1,9 +1,9 @@
 function get_cpu_vendor()
 {
-        local vendor="$(jaq -r '.system.cpu_vendor' "${json_config}")"
+        local vendor
 
-        # Return if 'vendor_id' is set in the JSON config.
-        [[ -n "${vendor}" ]] && return
+        # Return if 'vendor_id' is set in the bash config.
+        [[ -n "${system_cpu_vendor}" ]] && return
         [[ ! -f "/proc/cpuinfo" ]] && cpuinfo_error
 
         vendor="$(awk -F ': ' '/vendor_id/ { print $2; exit }' "/proc/cpuinfo")"
@@ -21,7 +21,7 @@ function get_cpu_vendor()
                 ;;
         esac
 
-        jaq -i '.system.cpu_vendor = "'"${vendor}"'"' "${json_config}"
+        update_config "system_cpu_vendor" "${vendor}" "${bash_config}"
 }
 
 function cpuinfo_error()

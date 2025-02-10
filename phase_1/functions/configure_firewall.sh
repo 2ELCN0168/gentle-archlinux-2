@@ -1,9 +1,7 @@
 function configure_firewall()
 {
-        local frw="$(jaq -r '.network.firewall' "${json_config}")"
-
-        # Exit if it's already set in the JSON config
-        [[ -n "${frw}" ]] && return
+        # Exit if it's already set in the bash config
+        [[ -n "${network_firewall}" ]] && return
 
         local ans frw
         while true; do
@@ -29,6 +27,5 @@ function configure_firewall()
                 frw=0
         fi
 
-        jaq -i '.network.firewall = "'"${frw}"'"' "${json_config}"
+        update_config "network_firewall" "${frw}" "${bash_config}"
 }
-

@@ -1,10 +1,9 @@
 function menu_fs()
 {
         local filesystem
-        filesystem="$(jaq -r '.drive.filesystem' "${json_config}")"
 
-        # Return if 'filesystem' is set in the JSON config.
-        [[ -n "${filesystem}" ]] && return
+        # Return if 'disk_filesystem' is set in the bash config.
+        [[ -n "${disk_filesystem}" ]] && return
 
         while true; do
                 title "Filesystem" "${C_C}" 40
@@ -40,6 +39,5 @@ function menu_fs()
 
         printf "%b" "${INFO} You chose ${C_W}${filesystem^^}${N_F}.\n"
 
-        jaq -i '.drive.filesystem = "'"${filesystem}"'"' \
-                "${json_config}"
+        update_config "disk_filesystem" "${filesystem}" "${bash_config}"
 }

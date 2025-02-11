@@ -136,6 +136,7 @@ function add_volume()
         done
 
         local new_volumes_list="volumes_volumes_list=("
+
         new_volumes_list+="\n"
         for i in "${!volumes_array[@]}"; do
                 new_volumes_list+="        [\"${i}\"]=\"${volumes_array[${i}]}\"\n"

@@ -52,7 +52,6 @@ volumes_volumes_list=(
         ["/"]="1gib"
 )
 
-
 # Network #
 network_manager="systemd-networkd"
 network_firewall="1"
@@ -76,7 +75,7 @@ packages_install_net_tools=""
 packages_install_help_tools=""
 packages_install_monitoring_tools=""
 packages_vim_nvim_configuration="1"
-packages_guest_agent=" "
+packages_guest_agent=""
 packages_base=(
         "base"
         "base-devel"
@@ -133,4 +132,3 @@ packages_help_tools=(
 )
 
 packages_additional_packages=()
-="1"

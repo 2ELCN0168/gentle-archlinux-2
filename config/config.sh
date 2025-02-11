@@ -1,4 +1,12 @@
-# System
+# ---------------------------- #
+# Template configuration file  #
+# archlinux-gentle-installer-2 #
+# ---------------------------- #
+
+# Associative arrays declaration, do not edit #
+declare -A volumes_volumes_list
+
+# System #
 system_uefi="1"
 system_bootloader="refind"
 system_grub_auth=""
@@ -10,43 +18,49 @@ system_keymap="us-acentos"
 system_mkinitcpio_hooks="base systemd autodetect modconf kms keyboard sd-vconsole block lvm2 filesystems fsck"
 system_swap="swapfile"
 
-# Users
+# Users #
 user_root_account=""
 
-## User
+## User ##
 user_active="1"
-user_username="gentle-butterfly"
+user_username="cute-lizard"
 user_groups=""
 user_home_dir=""
 user_administrator=""
 user_xdg_dirs=""
 
-# Pacman
+# Pacman #
 pacman_color="1"
 pacman_parallel_downloads="8"
 
-# Disk
+# Disk #
 disk_encryption="0"
 disk_filesystem="xfs"
 disk_lvm="1"
-disk_contains_nvme="0"
+disk_contains_nvme="1"
 disk_btrfs_subvolumes=""
 disk_btrfs_quotas=""
-disk_drive="sda"
+disk_drive="nvme0n1"
 
-## Volumes
+## Volumes ##
 volumes_only_root=""
 volumes_root_and_home=""
-volumes_volumes_list=""
+volumes_volumes_list=(
+        ["/home"]="3gib"
+        ["/efi"]="2gib"
+        ["/boot"]="2gib"
+        ["/"]="1gib"
+)
 
-# Network
-network_manager="networkmanager"
+
+# Network #
+network_manager="systemd-networkd"
 network_firewall="1"
 network_dns_1=""
 network_dns_2=""
 network_dns_over_tls=""
 
-# Customization
+# Customization #
 custom_motd="1"
 custom_issue="1"
 custom_issue_net=""
@@ -57,7 +71,7 @@ custom_sudo=""
 custom_bash=""
 custom_zsh=""
 
-# Packages
+# Packages #
 packages_install_net_tools=""
 packages_install_help_tools=""
 packages_install_monitoring_tools=""

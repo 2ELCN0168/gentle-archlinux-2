@@ -87,12 +87,12 @@ function partition_disks()
                 if [[ -n "${boot_vol_size}" ]]; then
                         if [[ "${uefi}" -eq 1 ]]; then
                                 # /efi or /boot
-                                sgdisk -n 1::+"${boot_vol_size}" -t 1:ef00 -c 1:"ESP" \
-                                        "/dev/${_drive}"
+                                sgdisk -n 1::+"${boot_vol_size}" -t 1:ef00 \
+                                        -c 1:"ESP" "/dev/${_drive}"
                         elif [[ "${uefi}" -eq 0 ]]; then
                                 # /boot
-                                parted -s "/dev/${_drive}" mkpart primary fat32 \
-                                        1Mib "${boot_vol_size}"
+                                parted -s "/dev/${_drive}" mkpart primary \
+                                        fat32 1Mib "${boot_vol_size}"
                         fi
                 fi
         fi
@@ -104,8 +104,8 @@ function partition_disks()
                 while IFS=$'\t' read -r mountpoint size; do
                         volumes["${mountpoint}"]="${size}"
                 done < <(jaq -r \
-                '.drive.volumes.volumes_list[] | "\(.mountpoint)\t\(.size)"' \
-                "${json_config}")
+                        '.drive.volumes.volumes_list[] | "\(.mountpoint)\t\(.size)"' \
+                        "${json_config}")
 
                 local partnum
                 # Start at partition number 2 if there was a boot volume created

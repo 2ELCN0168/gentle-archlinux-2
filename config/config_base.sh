@@ -3,6 +3,9 @@
 # archlinux-gentle-installer-2 #
 # ---------------------------- #
 
+# Associative arrays declaration, do not edit #
+declare -A volumes_volumes_list
+
 # System #
 system_uefi="1"
 system_bootloader=""
@@ -42,7 +45,7 @@ disk_drive=""
 ## Volumes ##
 volumes_only_root=""
 volumes_root_and_home=""
-volumes_volumes_list=""
+volumes_volumes_list=()
 
 # Network #
 network_manager=""

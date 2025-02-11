@@ -13,6 +13,22 @@ function init_phase_2()
 
                 read -r ans
                 : "${ans:=Y}"
+                printf "%b" "\n"
+
+                case "${ans}" in
+                [yY]) break ;;
+                [nN]) exit 0 ;;
+                *) invalid_answer ;;
+                esac
+        done
+
+        while true; do
+                printf "%b" "${C_R}Double check. Data erasing will occur after "
+                printf "%b" "that [Y/n] ->${N_F} "
+
+                read -r ans
+                : "${ans:=Y}"
+                printf "%b" "\n"
 
                 case "${ans}" in
                 [yY]) break ;;

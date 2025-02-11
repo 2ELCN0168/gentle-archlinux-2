@@ -1,6 +1,6 @@
 function menu_net_manager()
 {
-        local network_manager
+        local net_manager
 
         # Return if it's already set
         [[ -n "${network_manager}" ]] && return
@@ -30,20 +30,20 @@ function menu_net_manager()
 
         case "${ans}" in
         0)
-                network_manager="systemd-networkd"
+                net_manager="systemd-networkd"
                 ;;
         1)
-                network_manager="networkmanager"
+                net_manager="networkmanager"
                 ;;
         2)
-                network_manager=""
+                net_manager=""
                 ;;
         esac
 
         if [[ "${ans}" -ne 2 ]]; then
-                printf "%b" "${INFO} You will use ${C_P}${network_manager}"
+                printf "%b" "${INFO} You will use ${C_P}${net_manager}"
                 printf "%b" "${N_F}.\n\n"
         fi
 
-        update_config "network_manager" "${network_manager}" "${bash_config}"
+        update_config "network_manager" "${net_manager}" "${bash_config}"
 }

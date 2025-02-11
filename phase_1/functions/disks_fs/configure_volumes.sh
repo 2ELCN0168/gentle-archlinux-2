@@ -11,14 +11,14 @@ function configure_volumes()
         # NOTE:
         # That was a real pain to write. Just saying it.
 
-        local _drive volumes_list
+        local _drive
 
-        _drive="$(jaq -r '.drive.drive' "${json_config}")"
-        volumes_list="$(jaq -r '.drive.volumes.volumes_list | 
-        length' "${json_config}")"
+        # _drive="$(jaq -r '.drive.drive' "${json_config}")"
+        # volumes_list="$(jaq -r '.drive.volumes.volumes_list |
+        # length' "${json_config}")"
 
-        # Return if volumes are already set in the JSON file.
-        if [[ "${volumes_list}" -gt 0 ]]; then
+        # Return if volumes are already set in the bash file.
+        if [[ -n "${!volumes_volumes_list[*]}" ]]; then
                 return
         fi
 
@@ -73,14 +73,14 @@ function configure_volumes()
         done
 
         case "${ans}" in
-        0) add_volume "/" "${_drive}" ;;
-        1) add_volume "/ /home" "${_drive}" ;;
-        2) add_volume "/ /home /boot" "${_drive}" ;;
-        3) add_volume "/ /home /boot /efi" "${_drive}" ;;
-        4) add_volume "/ /home /var /tmp /usr /boot" "${_drive}" ;;
-        5) add_volume "/ /home /var /tmp /usr /boot /efi" "${_drive}" ;;
-        6) add_volume "/ /home /var /var/log /tmp /usr /boot /efi" "${_drive}" ;;
-        7) add_volume "/ /home /var /var/log /tmp /usr /boot /efi" "${_drive}" ;;
+        0) add_volume "/" "${disk_drive}" ;;
+        1) add_volume "/ /home" "${disk_drive}" ;;
+        2) add_volume "/ /home /boot" "${disk_drive}" ;;
+        3) add_volume "/ /home /boot /efi" "${disk_drive}" ;;
+        4) add_volume "/ /home /var /tmp /usr /boot" "${disk_drive}" ;;
+        5) add_volume "/ /home /var /tmp /usr /boot /efi" "${disk_drive}" ;;
+        6) add_volume "/ /home /var /var/log /tmp /usr /boot /efi" "${disk_drive}" ;;
+        7) add_volume "/ /home /var /var/log /tmp /usr /boot /efi" "${disk_drive}" ;;
         esac
 
 }
@@ -93,7 +93,7 @@ function add_volume()
         local total_size total_size_h drive_size
 
         total_size=0
-
+        declare -A volumes_array
         drive_size="$(lsblk --bytes -drno SIZE "/dev/${2}")"
         total_size=$((total_size + drive_size))
 
@@ -132,12 +132,15 @@ function add_volume()
                                 invalid_answer
                         fi
                 done
-
-                jaq -i '.drive.volumes.volumes_list += [
-                        {
-                                "mountpoint": "'"${i}"'",
-                                "size": "'"${ans}"'"
-                        }
-                ]' "${json_config}"
+                volumes_array["${i}"]="${ans}"
         done
+
+        local new_volumes_list="volumes_volumes_list=("
+        new_volumes_list+="\n"
+        for i in "${!volumes_array[@]}"; do
+                new_volumes_list+="        [\"${i}\"]=\"${volumes_array[${i}]}\"\n"
+        done
+        new_volumes_list+=")\n"
+
+        sed -i "/^volumes_volumes_list=()/c\\${new_volumes_list}" "${bash_config}"
 }

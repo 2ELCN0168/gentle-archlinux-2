@@ -3,7 +3,7 @@ function configure_user()
         local username home_dir administrator xdg_dirs
 
         # If the user doesn't want to create a user, return.
-        if [[ -n "${user_active}" && "${user_active}" -eq 0 ]]; then
+        if [[ -n "${user_active}" ]]; then
                 return
         fi
 

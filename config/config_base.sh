@@ -17,6 +17,8 @@ system_cpu_vendor=""
 system_keymap=""
 system_mkinitcpio_hooks=""
 system_swap=""
+system_localtime=""
+system_locales=""
 
 # Users #
 user_root_account=""

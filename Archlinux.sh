@@ -27,6 +27,7 @@ source "./phase_1/functions/menu_guest_agents.sh"
 source "./phase_1/functions/menu_hostname_fqdn.sh"
 source "./phase_1/functions/menu_root_account.sh"
 source "./phase_1/functions/menu_vconsole.sh"
+source "./phase_1/functions/menu_zoneinfo.sh"
 source "./phase_1/functions/configure_pacman.sh"
 source "./phase_1/functions/configure_mkinitcpio.sh"
 source "./phase_1/functions/configure_vim_nvim.sh"
@@ -114,6 +115,8 @@ function main()
         menu_domain_name
 
         menu_vconsole
+
+        menu_zoneinfo
 
         configure_pacman
 

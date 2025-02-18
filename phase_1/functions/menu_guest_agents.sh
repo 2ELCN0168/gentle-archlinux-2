@@ -33,7 +33,7 @@ function menu_guest_agents()
         0) g_agent="qemu-guest-agent" ;;
         1) g_agent="virtualbox-guest-utils" ;;
         2) g_agent="open-vm-tools" ;;
-        3) g_agent=" " ;;
+        3) g_agent="" ;;
         esac
 
         if [[ "${ans}" -ne 3 ]]; then

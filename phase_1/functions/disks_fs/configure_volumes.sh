@@ -73,14 +73,14 @@ function configure_volumes()
         done
 
         case "${ans}" in
-        0) add_volume "/" "${disk_drive}" ;;
-        1) add_volume "/ /home" "${disk_drive}" ;;
-        2) add_volume "/ /home /boot" "${disk_drive}" ;;
-        3) add_volume "/ /home /boot /efi" "${disk_drive}" ;;
-        4) add_volume "/ /home /var /tmp /usr /boot" "${disk_drive}" ;;
-        5) add_volume "/ /home /var /tmp /usr /boot /efi" "${disk_drive}" ;;
-        6) add_volume "/ /home /var /var/log /tmp /usr /boot /efi" "${disk_drive}" ;;
-        7) add_volume "/ /home /var /var/log /tmp /usr /boot /efi" "${disk_drive}" ;;
+        0) add_volume "/" ;;
+        1) add_volume "/ /home" ;;
+        2) add_volume "/ /home /boot" ;;
+        3) add_volume "/ /home /boot /efi" ;;
+        4) add_volume "/ /home /var /tmp /usr /boot" ;;
+        5) add_volume "/ /home /var /tmp /usr /boot /efi" ;;
+        6) add_volume "/ /home /var /var/log /tmp /usr /boot /efi" ;;
+        7) add_volume "/ /home /var /var/log /tmp /usr /boot /efi" ;;
         esac
 
 }
@@ -94,7 +94,7 @@ function add_volume()
 
         total_size=0
         declare -A volumes_array
-        drive_size="$(lsblk --bytes -drno SIZE "/dev/${2}")"
+        drive_size="$(lsblk --bytes -drno SIZE "/dev/${disk_drive}")"
         total_size=$((total_size + drive_size))
 
         # No double quotes because I need to split the string provided in $1.

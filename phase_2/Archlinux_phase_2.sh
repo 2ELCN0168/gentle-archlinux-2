@@ -1,4 +1,5 @@
 # source "./phase_2/functions/"
+source "./config/config.sh"
 source "./config/text_formatting.sh"
 source "./phase_2/functions/init_phase_2.sh"
 source "./phase_2/functions/disks_fs/partition_disks.sh"
@@ -27,7 +28,7 @@ function main()
 
         generate_fstab
 
-        cp -a "../../gentle-archlinux-2" "/mnt/root"
+        cp -a "../gentle-archlinux-2" "/mnt/root"
         arch-chroot "/mnt" "/root/gentle-archlinux-2/phase_3/Archlinux_phase_3.sh"
 }
 

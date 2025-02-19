@@ -5,6 +5,7 @@ source "./phase_3/functions/set_hostname.sh"
 source "./phase_3/functions/set_hosts.sh"
 source "./phase_3/functions/set_vconsole.sh"
 source "./phase_3/functions/set_pacman.sh"
+source "./phase_3/functions/set_mkinitcpio.sh"
 
 function main()
 {
@@ -21,6 +22,9 @@ function main()
         set_vconsole
 
         set_pacman
+
+        set_mkinitcpio
+
 }
 
 main

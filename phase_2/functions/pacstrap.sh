@@ -53,5 +53,7 @@ function pacstrap_installation()
         "linux-zen") packages+=("linux-zen" "linux-zen-headers") ;;
         esac
 
-        pacstrap -K "/mnt" "${packages[@]}"
+        # NOTE: Must not double quote ${packages[@]}.
+
+        pacstrap -K "/mnt" ${packages[@]}
 }

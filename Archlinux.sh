@@ -3,12 +3,12 @@
 # Created on: 2024-12-27
 # Author: 2ELCN0168
 # Github: https://github.com/2ELCN0168
-# NOTE: This part only sets up the JSON configuration file.
+# NOTE: This part only sets up the Bash configuration file.
 
 # source "./phase_1/functions/"
-if [[ -f "./config/config.sh" ]]; then
-        source "./config/config.sh"
-fi
+# if [[ -f "./config/config.sh" ]]; then
+#         source "./config/config.sh"
+# fi
 source "./config/text_formatting.sh"
 source "./phase_1/functions/greetings.sh"
 source "./phase_1/functions/lvm_luks/lvm_luks_scanning.sh"

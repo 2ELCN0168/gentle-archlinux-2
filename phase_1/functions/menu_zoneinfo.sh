@@ -20,6 +20,8 @@ function menu_zoneinfo()
 
                 printf "%b" "────────────────────────────────────────\n\n"
 
+                printf "%b" "${Q} Where do you live? [0-7] -> "
+
                 read -r ans
                 : "${ans:=0}"
                 printf "%b" "\n"
@@ -73,6 +75,6 @@ function menu_zoneinfo()
         fi
 
         printf "%b" "${INFO} Zoneinfo set to: ${C_P}${localtime}${N_F}.\n"
-        printf "%b" "${INFO} Locales set to: ${C_P}${locales}${N_F}.\n"
+        printf "%b" "${INFO} Locales set to: ${C_P}${locales}${N_F}.\n\n"
 
 }

@@ -9,7 +9,7 @@ function menu_net_manager()
                 title "Network Manager" "${C_C}" 40
 
                 printf "%b" "[0] - ${C_G}systemd-networkd${N_F}\n"
-                printf "%b" "[1] - ${C_C}NetworkManager${N_F} (default)\n"
+                printf "%b" "[1] - ${C_C}NetworkManager${N_F} [KDE/GNOME uses that] (default)\n"
                 printf "%b" "${C_Y}[2] - I will use my own (skip) >>${N_F} \n\n"
 
                 printf "%b" "────────────────────────────────────────\n\n"

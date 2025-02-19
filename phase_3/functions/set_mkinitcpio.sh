@@ -43,10 +43,12 @@ sd-vconsole ${is_luks}block ${is_lvm}filesystem fsck)"
         ' "/etc/mkinitcpio.conf" 1> "${tempfile}" \
                 && mv "${tempfile}" "/etc/mkinitcpio.conf"
 
+        printf "%b" "${INFO} Generating ${C_W}initramfs${N_F}.\n\n"
+
         if mkinitcpio -P; then
-                printf "%b" "${SUC} Successfully generated initramfs.\n\n"
+                printf "%b" "\n${SUC} Successfully generated initramfs.\n\n"
         else
-                printf "%b" "${ERR} Could not generate initramfs.\n\n"
+                printf "%b" "\n${ERR} Could not generate initramfs.\n\n"
         fi
 
 }

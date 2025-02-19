@@ -63,6 +63,7 @@ function _username()
                 "isometric-owl"
                 "weird-canary"
                 "cute-lizard"
+                "shiney-awawa"
         )
 
         local default_username

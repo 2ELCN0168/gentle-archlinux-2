@@ -9,10 +9,10 @@ function set_vconsole()
 
         if [[ "${?}" -eq 0 ]]; then
                 printf "%b" "${SUC} Created file ${C_P}/etc/vconsole.conf"
-                printf "%b" "${N_F}.\n"
+                printf "%b" "${N_F}.\n\n"
         else
                 printf "%b" "${ERR} Could not create file ${C_P}"
-                printf "%b" "/etc/vconsole.conf${N_F}.\n"
+                printf "%b" "/etc/vconsole.conf${N_F}.\n\n"
         fi
 
 }

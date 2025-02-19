@@ -63,6 +63,7 @@ function menu_zoneinfo()
         7)
                 localtime="Asia/Pyongyang"
                 locales="ko"
+                export n_korea=1
                 ;;
         esac
 

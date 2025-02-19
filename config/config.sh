@@ -8,22 +8,23 @@ declare -A volumes_volumes_list
 
 # System #
 system_uefi="1"
-system_bootloader="refind"
+system_bootloader="grub"
 system_grub_auth=""
 system_kernel="linux"
-system_hostname="localhost"
-system_domain_name="home.arpa"
+system_hostname="fjkwhbfkwu"
+system_domain_name="fkrwwkw.fwehjfgbkw"
 system_cpu_vendor="AuthenticAMD"
 system_keymap="us-acentos"
-system_mkinitcpio_hooks="base systemd autodetect modconf kms keyboard sd-vconsole block lvm2 filesystems fsck"
 system_swap="swapfile"
+system_localtime="Europe/Paris"
+system_locales="fr"
 
 # Users #
 user_root_account=""
 
 ## User ##
 user_active="1"
-user_username="cute-lizard"
+user_username="unstoppable-hyrax"
 user_groups=""
 user_home_dir=""
 user_administrator=""
@@ -46,14 +47,15 @@ disk_drive="nvme0n1"
 volumes_only_root=""
 volumes_root_and_home=""
 volumes_volumes_list=(
-        ["/home"]="3gib"
-        ["/efi"]="2gib"
-        ["/boot"]="2gib"
-        ["/"]="1gib"
+        ["/home"]="1gib"
+        ["/efi"]="1gib"
+        ["/boot"]="1gib"
+        ["/"]="8gib"
 )
 
+
 # Network #
-network_manager="systemd-networkd"
+network_manager="networkmanager"
 network_firewall="1"
 network_dns_1=""
 network_dns_2=""
@@ -132,3 +134,5 @@ packages_help_tools=(
 )
 
 packages_additional_packages=()
+system_mkinitcpio_hooks="base systemd autodetect modconf kms keyboard sd-vconsole block filesystems fsck"
+="1"

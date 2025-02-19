@@ -2,7 +2,7 @@ function pacstrap_installation()
 {
         local packages
 
-        packages+=("${packages_base_packages[@]}")
+        packages+=("${packages_base[@]}")
         packages+=("${packages_guest_agent}")
 
         if [[ "${packages_install_net_tools}" -eq 1 ]]; then

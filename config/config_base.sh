@@ -99,6 +99,7 @@ packages_base=(
         "arch-audit"
         "xdg-user-dirs"
         "arch-install-scripts"
+        "pacman-contrib"
 )
 
 packages_net_tools=(

@@ -29,7 +29,7 @@ function set_mkinitcpio()
         printf "%b" "custom parameters.\n\n"
 
         hooks="HOOKS=(base systemd ${is_btrfs}autodetect modconf kms keyboard \
-sd-vconsole ${is_luks}block ${is_lvm}filesystem fsck)"
+sd-vconsole ${is_luks}block ${is_lvm}filesystems fsck)"
 
         local tempfile
         tempfile="$(mktemp)"

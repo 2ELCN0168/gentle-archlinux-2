@@ -1,7 +1,7 @@
 function set_environment()
 {
         curl "https://raw.githubusercontent.com/git/git/refs/heads/master/contrib/completion/git-prompt.sh" \
-                "/root/gentle-archlinux-2/phase_3/include/.git-prompt.sh"
+                > "/root/gentle-archlinux-2/phase_3/include/.git-prompt.sh"
 
         local shellrc=(
                 ".bashrc"
@@ -16,7 +16,7 @@ function set_environment()
 
         for i in "${paths[@]}"; do
                 for a in "${shellrc[@]}"; do
-                        cp "/root/gentle-archlinux-2/phase_3/include/${a}" "${i}"
+                        cp -a "/root/gentle-archlinux-2/phase_3/include/${a}" "${i}"
                 done
         done
 
@@ -25,5 +25,5 @@ function set_environment()
                         >> "/etc/skel/{.bashrc,.zshrc}"
         fi
 
-        cp "/root/gentle-archlinux-2/phase_3/include/shell_conf.d" "/etc"
+        cp -a "/root/gentle-archlinux-2/phase_3/include/shell_conf.d" "/etc"
 }

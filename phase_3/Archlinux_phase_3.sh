@@ -13,6 +13,7 @@ source "./phase_3/functions/set_root_account.sh"
 source "./phase_3/functions/set_vim_nvim.sh"
 source "./phase_3/functions/set_environment.sh"
 source "./phase_3/functions/create_user.sh"
+source "./phase_3/functions/install_bootloader.sh"
 
 function main()
 {
@@ -45,6 +46,8 @@ function main()
         set_environment # 1
 
         create_user # 2
+
+        install_bootloader
 
 }
 

@@ -53,7 +53,7 @@ function install_refind()
         fi
 
         local refind_line
-        refind_line="\"Archlinux\" \"${root_line}${luks_beginning}${uuid}
+        refind_line="\"Archlinux\" \"${root_line}${luks_beginning}${uuid}\
 ${luks_ending} rw initrd=initramfs-${system_kernel}.img${is_btrfs}${microcode}\""
 
         if echo -e "${refind_line}" > "/boot/refind_linux.conf"; then
@@ -184,7 +184,7 @@ function install_grub()
         fi
 
         local grub_line
-        grub_line="\"${root_line}${luks_beginning}${uuid}
+        grub_line="\"${root_line}${luks_beginning}${uuid}\
 ${luks_ending} rw initrd=initramfs-${system_kernel}.img${is_btrfs}${microcode}\""
 
         awk -v params="${grub_line}" \
